@@ -9,7 +9,7 @@
         android:icon="@drawable/baseline_camera_24"
         android:title="촬영검색" />
     <item
-        android:id="@+id/myPageFragment"
-        android:icon="@drawable/baseline_person_24"
-        android:title="마이페이지" />
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/baseline_list_alt_24"
+        android:title="전체보기" />
 </menu>

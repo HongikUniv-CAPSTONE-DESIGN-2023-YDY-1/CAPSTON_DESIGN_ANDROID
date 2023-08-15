@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/myPageFragment"
-    tools:context="com.example.capstonedesign.fragment.MyPageFragment">
+    android:id="@+id/searchFragment"
+    tools:context="com.example.capstonedesign.fragment.SearchFragment">
 
     <TextView
         android:layout_width="wrap_content"

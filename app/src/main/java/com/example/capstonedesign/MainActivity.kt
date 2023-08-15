@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.capstonedesign.databinding.ActivityMainBinding
-import com.example.capstonedesign.databinding.FragmentMypageBinding
+
 
 class MainActivity : AppCompatActivity() {
 
