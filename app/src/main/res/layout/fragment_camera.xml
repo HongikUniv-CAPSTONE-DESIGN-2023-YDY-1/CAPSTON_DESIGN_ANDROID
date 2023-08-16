@@ -13,8 +13,7 @@
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-         />
+        android:layout_weight="1"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,7 +26,6 @@
             android:layout_height="80dp"
             android:layout_centerInParent="true"
             android:background="@drawable/camera_button_background"
-            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

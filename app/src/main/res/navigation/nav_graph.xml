@@ -8,7 +8,11 @@
         android:id="@+id/cameraFragment"
         android:name="com.example.capstonedesign.fragment.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" />
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_cameraFragment_to_cameraResultFragment"
+            app:destination="@id/cameraResultFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.capstonedesign.fragment.HomeFragment"
@@ -18,5 +22,25 @@
         android:id="@+id/searchFragment"
         android:name="com.example.capstonedesign.fragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_itemDetailFragmnet"
+            app:destination="@id/itemDetailFragmnet" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemDetailFragmnet"
+        android:name="com.example.capstonedesign.fragment.ItemDetailFragmnet"
+        android:label="ItemDetailFragmnet" >
+        <action
+            android:id="@+id/action_itemDetailFragmnet_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraResultFragment"
+        android:name="com.example.capstonedesign.fragment.CameraResultFragment"
+        android:label="CameraResultFragment" >
+        <action
+            android:id="@+id/action_cameraResultFragment_to_itemDetailFragmnet"
+            app:destination="@id/itemDetailFragmnet" />
+    </fragment>
 </navigation>
