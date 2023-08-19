@@ -1,4 +1,4 @@
-package com.example.capstonedesign.fragment
+package com.example.capstonedesign.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,21 +11,18 @@ import com.example.capstonedesign.databinding.FragmentHomeBinding
 
 class CameraResultFragment: Fragment(){
 
-    private var mbinding: FragmentCameraResultBinding? = null
+    private lateinit var binding: FragmentCameraResultBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentCameraResultBinding.inflate(inflater, container, false)
-        mbinding = binding
-        return mbinding?.root
+        binding = FragmentCameraResultBinding.inflate(inflater, container, false)
+
+        return binding?.root
 
     }
 
-    override fun onDestroyView() {
-        mbinding = null
-        super.onDestroyView()
-    }
+
 }

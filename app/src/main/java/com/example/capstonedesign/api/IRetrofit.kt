@@ -24,4 +24,6 @@ interface IRetrofit {
     suspend fun postImage(
         @Part image: MultipartBody.Part
     ): Response<ItemResponse>
+
+
 }

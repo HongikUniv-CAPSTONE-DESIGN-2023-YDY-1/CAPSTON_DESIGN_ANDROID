@@ -1,4 +1,4 @@
-package com.example.capstonedesign.fragment
+package com.example.capstonedesign.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,17 @@ import com.example.capstonedesign.databinding.FragmentItemDetailBinding
 
 class ItemDetailFragmnet: Fragment() {
 
-    private var mbinding: FragmentItemDetailBinding? = null
+    private lateinit var binding: FragmentItemDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentItemDetailBinding.inflate(inflater, container, false)
-        mbinding = binding
-        return mbinding?.root
+        binding = FragmentItemDetailBinding.inflate(inflater, container, false)
+
+        return binding?.root
     }
 
-    override fun onDestroyView() {
-        mbinding = null
-        super.onDestroyView()
-    }
+
 }

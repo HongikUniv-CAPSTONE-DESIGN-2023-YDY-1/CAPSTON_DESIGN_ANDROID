@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:orientation="vertical"
-    tools:context="com.example.capstonedesign.fragment.CameraFragment">
+    tools:context="com.example.capstonedesign.ui.CameraFragment">
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"

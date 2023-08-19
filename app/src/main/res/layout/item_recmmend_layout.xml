@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="편의점명"
         android:textColor="@color/black"
-        android:background="@drawable/textview_border_conv_color_background"/>
+        android:background="@drawable/emart24_border_color"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
