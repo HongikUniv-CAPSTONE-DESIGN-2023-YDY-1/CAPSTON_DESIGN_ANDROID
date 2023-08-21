@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -58,18 +59,18 @@ class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>(
         }
         val brand = item.brand
         val brandColor = when(brand) {
-            "CU" -> Color.parseColor("@Color/cu")
-            "GS25" -> Color.parseColor("@Color/gs25")
-            "SEVENELEVEN" -> Color.parseColor("@Color/seven")
-            "EMART24" -> Color.parseColor("@Color/emart24")
+            "CU" -> ContextCompat.getColor(holder.itemView.context, R.color.cu)
+            "GS25" -> ContextCompat.getColor(holder.itemView.context, R.color.gs25)
+            "SEVENELEVEN" -> ContextCompat.getColor(holder.itemView.context, R.color.seven)
+            "EMART24" -> ContextCompat.getColor(holder.itemView.context, R.color.emart24)
             else -> Color.BLACK
         }
         val borderColor = when(brand) {
-            "CU" -> "R.drawable.cu_border_color"
-            "GS25" -> "R.drawable.gs25_border_color"
-            "SEVENELEVEN" -> "R.drawable.seven_border_color"
-            "EMART24" -> "R.drawable.emart24_border_color"
-            else -> "R.drawable.black_border"
+            "CU" -> R.drawable.cu_border_color
+            "GS25" -> R.drawable.gs25_border_color
+            "SEVENELEVEN" -> R.drawable.seven_border_color
+            "EMART24" -> R.drawable.emart24_border_color
+            else -> R.drawable.black_border
         }
         val imgData = item.imgUrl
         val fullImgUrl = "http://nas.robinjoon.xyz:8080/image/$imgData"
@@ -78,7 +79,7 @@ class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>(
             findViewById<TextView>(R.id.tv_item_promotion).text = formattedPromtion
             findViewById<TextView>(R.id.tv_conv_name).text = item.brand
             findViewById<TextView>(R.id.tv_conv_name).setTextColor(brandColor)
-            findViewById<TextView>(R.id.tv_conv_name).setBackgroundResource(borderColor.toInt())
+            findViewById<TextView>(R.id.tv_conv_name).setBackgroundResource(borderColor)
             findViewById<TextView>(R.id.tv_item_name).text = item.name
             findViewById<TextView>(R.id.tv_price).text = item.pricePerUnit.toString()
             Glide.with(this).load(fullImgUrl).into(findViewById(R.id.iv_item_image))

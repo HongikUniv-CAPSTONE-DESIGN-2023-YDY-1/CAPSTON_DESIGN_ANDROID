@@ -19,7 +19,7 @@ import com.example.capstonedesign.utils.Resource
 class SearchFragment: Fragment(){
 
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var adapter: ItemSearchAdapter
+    private lateinit var itemadapter: ItemSearchAdapter
     lateinit var viewModel: ItemSearchViewModel
 
     override fun onCreateView(
@@ -28,34 +28,9 @@ class SearchFragment: Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
-        viewModel = (activity as MainActivity).viewModel
-        setupRecyclerView()
-
-        viewModel.allItems.observe(viewLifecycleOwner, Observer { response ->
-            when(response){
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.data?.let {response ->
-                        Log.d("검색프레그먼트", "response: $response")
-                        adapter.differ.submitList(response.response.searchItems)
-                    }
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Log.e("검색프레그먼트", "An error occured: $message")
-                    }
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-            }
-
-        })
-
-
-
         return binding.root
+
+
 
     }
 
@@ -64,13 +39,13 @@ class SearchFragment: Fragment(){
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
-        viewModel.allItems.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.Items.observe(viewLifecycleOwner, Observer { response ->
             when(response){
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {response ->
                         Log.d("검색프레그먼트", "response: $response")
-                        adapter.differ.submitList(response.response.searchItems)
+                        itemadapter.differ.submitList(response.response.searchItems)
                     }
                 }
                 is Resource.Error -> {
@@ -85,6 +60,21 @@ class SearchFragment: Fragment(){
             }
 
         })
+        binding.btnItemSearch.setOnClickListener {
+            val searchWord = binding.etItemSearch.text.toString()
+            viewModel.searchItems(searchWord, "STRONG")
+        }
+        binding.btnAll.setOnClickListener {
+            viewModel.getAllItems()
+        }
+        binding.btnOnePlusOne.setOnClickListener {
+            viewModel.searchPromotion("ONE_PLUS_ONE")
+        }
+        binding.btnTwoPlusOne.setOnClickListener {
+            viewModel.searchPromotion("TWO_PLUS_ONE")
+        }
+
+
     }
 
     private fun hideProgressBar() {
@@ -94,10 +84,9 @@ class SearchFragment: Fragment(){
         binding.progressBar.visibility = View.VISIBLE
     }
     private fun setupRecyclerView() {
-        adapter = ItemSearchAdapter()
-        binding.rvItemList.apply {
-            adapter = adapter
-            layoutManager = LinearLayoutManager(activity)
-        }
+        itemadapter = ItemSearchAdapter()
+        binding.rvItemList.layoutManager = LinearLayoutManager(activity)
+        binding.rvItemList.adapter = itemadapter
+        binding.rvItemList.setHasFixedSize(true)
     }
 }

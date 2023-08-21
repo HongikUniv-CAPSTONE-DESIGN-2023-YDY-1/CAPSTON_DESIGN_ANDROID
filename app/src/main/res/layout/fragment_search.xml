@@ -37,46 +37,46 @@
         android:layout_height="40dp">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_all"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="전체"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintEnd_toStartOf="@+id/btn_one_plus_one"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_one_plus_one"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="1+1"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintEnd_toStartOf="@+id/btn_two_plus_one"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintStart_toEndOf="@+id/btn_all"
             tools:layout_editor_absoluteY="0dp" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btn_two_plus_one"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="2+1"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/button4"
+            app:layout_constraintEnd_toStartOf="@+id/btn_discount"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintStart_toEndOf="@+id/btn_one_plus_one"
             tools:layout_editor_absoluteY="0dp" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_discount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="할인"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button3"
+            app:layout_constraintStart_toEndOf="@+id/btn_two_plus_one"
             tools:layout_editor_absoluteY="0dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
