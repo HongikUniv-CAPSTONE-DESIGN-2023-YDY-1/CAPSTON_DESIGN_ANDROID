@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
+
+
 
 plugins {
     id("com.android.application")
@@ -62,8 +62,12 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     //googlemap
-    implementation("com.google.android.gms:play-services-maps:18.0.1")
-    implementation("com.google.android.gms:play-services-location:19.0.1")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.libraries.places:places:3.2.0")
+    implementation("com.google.maps.android:android-maps-utils:2.3.0")
+    implementation("com.android.volley:volley:1.2.1")
+
     //camerax
     implementation("androidx.camera:camera-core:1.2.3")
     implementation("androidx.camera:camera-camera2:1.2.3")

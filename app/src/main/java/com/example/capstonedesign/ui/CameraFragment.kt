@@ -26,6 +26,7 @@ import com.example.capstonedesign.utils.Constants.Companion.TAG
 import java.io.File
 import java.util.Locale
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class CameraFragment: Fragment(){
 
@@ -34,6 +35,7 @@ class CameraFragment: Fragment(){
     private var imageCapture: ImageCapture? = null
     private lateinit var outputDirectory: File
     private lateinit var savedUri: Uri
+    private lateinit var cameraExecutor: ExecutorService
 
 
     private val REQUIRED_PERMISSIONS = arrayOf(android.Manifest.permission.CAMERA)
@@ -54,7 +56,7 @@ class CameraFragment: Fragment(){
         binding = FragmentCameraBinding.inflate(inflater, container, false)
 
         outputDirectory = getOutputDirectory()
-
+        cameraExecutor = Executors.newSingleThreadExecutor()
 
         return binding.root
     }
@@ -153,6 +155,9 @@ class CameraFragment: Fragment(){
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        cameraExecutor.shutdown()
+    }
 
 }

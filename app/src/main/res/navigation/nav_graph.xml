@@ -48,7 +48,11 @@
     <fragment
         android:id="@+id/cameraResultFragment"
         android:name="com.example.capstonedesign.ui.CameraResultFragment"
-        android:label="CameraResultFragment" />
+        android:label="CameraResultFragment" >
+        <action
+            android:id="@+id/action_cameraResultFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mypageFragment"
         android:name="com.example.capstonedesign.ui.MypageFragment"

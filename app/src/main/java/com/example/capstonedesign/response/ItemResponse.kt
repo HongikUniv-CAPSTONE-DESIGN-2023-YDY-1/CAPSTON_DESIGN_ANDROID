@@ -27,3 +27,4 @@ data class ResponseData(
     @SerializedName("searchItems")
     val searchItems: List<SearchItem>
 )
+
