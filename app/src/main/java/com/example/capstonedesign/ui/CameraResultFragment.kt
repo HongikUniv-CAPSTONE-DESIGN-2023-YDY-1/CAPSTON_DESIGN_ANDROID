@@ -5,6 +5,7 @@ package com.example.capstonedesign.ui
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Color
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,8 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.google.android.libraries.places.api.model.LocationRestriction
-
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -23,33 +23,50 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.capstonedesign.MainActivity
 import com.example.capstonedesign.R
+import com.example.capstonedesign.api.KakaoClient
+import com.example.capstonedesign.api.KakaoInterface
 import com.example.capstonedesign.databinding.FragmentCameraResultBinding
 import com.example.capstonedesign.model.ItemSearchViewModel
 import com.example.capstonedesign.response.ItemResponse
+import com.example.capstonedesign.response.PlaceInfo
+import com.example.capstonedesign.utils.Constants
 import com.example.capstonedesign.utils.Resource
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
-import com.google.android.libraries.places.api.net.PlacesClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class CameraResultFragment: Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentCameraResultBinding
     lateinit var viewModel: ItemSearchViewModel
-
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var placesClient: PlacesClient
     private lateinit var mMap: GoogleMap
     private lateinit var placeName: String
+    private val defaultLocation = LatLng(37.5665, 126.9780)
+    private var lastKnownLocation: Location? = null
+    private var locationPermissionGranted = false
 
+    private var currentLatitude: Double = 0.0
+    private var currentLongitude: Double = 0.0
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                locationPermissionGranted = true
+                updateLocationUI()
+            } else {
+                locationPermissionGranted = false
+                updateLocationUI()
+                Toast.makeText(requireContext(), "위치 권한이 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,11 +76,8 @@ class CameraResultFragment: Fragment(), OnMapReadyCallback {
         binding = FragmentCameraResultBinding.inflate(inflater, container, false)
 
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as com.google.android.gms.maps.SupportMapFragment?
-        mapFragment?.getMapAsync(this)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        Places.initialize(requireContext(), getString(R.string.google_maps_key))
-        placesClient = Places.createClient(requireContext())
+
+
         return binding.root
     }
 
@@ -91,6 +105,7 @@ class CameraResultFragment: Fragment(), OnMapReadyCallback {
                         }
                         Log.d("placeName", placeName)
                         addInfo(item)
+                        Log.d("placeName", placeName)
                     }
                 }
                 is Resource.Error -> {
@@ -106,6 +121,22 @@ class CameraResultFragment: Fragment(), OnMapReadyCallback {
             }
 
         })
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+
+        } else {
+            getLocationPermission()
+        }
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as com.google.android.gms.maps.SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+
 
 
 
@@ -123,6 +154,7 @@ class CameraResultFragment: Fragment(), OnMapReadyCallback {
         }
         return result
     }
+
     private fun addInfo(result: ItemResponse){
         if (result.response.searchItems.isEmpty()){
             Toast.makeText(requireContext(), "검색 결과가 없습니다. 사진을 다시 촬영해주세요", Toast.LENGTH_SHORT).show()
@@ -155,21 +187,18 @@ class CameraResultFragment: Fragment(), OnMapReadyCallback {
         val imgData = response.imgUrl
         val fullImgUrl = "http://nas.robinjoon.xyz:8080/image/$imgData"
 
-            binding.apply {
-                tvItemPromotion.text = formatPromotion
-                tvConvName.text = brand
-                tvConvName.setTextColor(brandColor)
-                tvConvName.setBackgroundResource(borderColor)
-                tvItemName.text = name
-                tvItemPerPrice.text = response.pricePerUnit.toString()
-                tvItemGroupPrice.text = response.pricePerGroup.toString()
-                Glide.with(this@CameraResultFragment).load(fullImgUrl).into(ivItemImage)
-            }
+        binding.apply {
+            tvItemPromotion.text = formatPromotion
+            tvConvName.text = brand
+            tvConvName.setTextColor(brandColor)
+            tvConvName.setBackgroundResource(borderColor)
+            tvItemName.text = name
+            tvItemPerPrice.text = response.pricePerUnit.toString()
+            tvItemGroupPrice.text = response.pricePerGroup.toString()
+            Glide.with(this@CameraResultFragment).load(fullImgUrl).into(ivItemImage)
+        }
 
-
-
-
-
+        searchPlace(currentLatitude, currentLongitude, 2000, placeName)
 
     }
 
@@ -180,84 +209,121 @@ class CameraResultFragment: Fragment(), OnMapReadyCallback {
         binding.progressBar.visibility = View.VISIBLE
     }
 
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.clear()
-        fetchCurrentLocation()
+        updateLocationUI()
+        getDeviceLocation()
+
+
     }
 
-    private fun fetchCurrentLocation() {
-        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
-            mMap.isMyLocationEnabled = true
-
-            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-                location?.let {
-                    val currentLatLng = com.google.android.gms.maps.model.LatLng(location.latitude, location.longitude)
-                    mMap.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(currentLatLng, 17f))
-                    mMap.addMarker(MarkerOptions().position(currentLatLng).title("현재 위치"))
-
-                    searchPlaces()
-                }
-            }
-        } else {
-            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
+    @SuppressWarnings("MissingPermission")
+    private fun updateLocationUI() {
+        if (mMap == null) {
+            return
         }
-    }
-    private fun searchPlaces() {
         try {
-            val currentLatLng = mMap.cameraPosition.target
-
-
-            val request = FindCurrentPlaceRequest.builder(listOf(Place.Field.NAME, Place.Field.LAT_LNG)).build()
-
-            placesClient.findCurrentPlace(request).addOnSuccessListener { response ->
-                mMap.clear()
-                val distanceThreshold = 0.01
-                val distanceThresholdSquared = distanceThreshold * distanceThreshold
-                var markerAdded = false
-                for (placeLikelihood in response.placeLikelihoods) {
-                    val place =placeLikelihood.place
-                    val placeLatLng = place.latLng
-                    if (placeLatLng != null && calculateSquaredDistance(currentLatLng, placeLatLng) < distanceThresholdSquared && place.name?.startsWith(placeName) == true) {
-                        mMap.addMarker(MarkerOptions().position(placeLatLng).title(place.name))
-                        markerAdded = true
-                    }
-                }
-                if (!markerAdded) {
-
-                    Toast.makeText(requireContext(), "주변에 ${placeName}이(가) 없습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }.addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "오류 발생: ${exception.message}", Toast.LENGTH_SHORT).show()
+            if (locationPermissionGranted) {
+                mMap.isMyLocationEnabled = true
+                mMap.uiSettings.isMyLocationButtonEnabled = true
+            } else {
+                mMap.isMyLocationEnabled = false
+                mMap.uiSettings.isMyLocationButtonEnabled = false
+                lastKnownLocation = null
+                getLocationPermission()
             }
         } catch (e: SecurityException) {
-            Toast.makeText(requireContext(), "위치 권한이 없습니다.", Toast.LENGTH_SHORT).show()
+            Log.e("Exception: %s", e.message.toString())
         }
     }
-    private fun calculateSquaredDistance(latLng1: LatLng, latLng2: LatLng): Double {
-        val latDiff = latLng1.latitude - latLng2.latitude
-        val lngDiff = latLng1.longitude - latLng2.longitude
-        return (latDiff * latDiff) + (lngDiff * lngDiff)
-    }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                fetchCurrentLocation()
-            } else {
-                Toast.makeText(requireContext(), "위치 권한이 없습니다.", Toast.LENGTH_SHORT).show()
+    @SuppressWarnings("MissingPermission")
+    private fun getDeviceLocation() {
+        try {
+            if (locationPermissionGranted){
+                val locationResult = fusedLocationProviderClient.lastLocation
+                locationResult.addOnCompleteListener(requireActivity()){ task ->
+                    if(task.isSuccessful) {
+                        lastKnownLocation = task.result
+                        if (lastKnownLocation != null) {
+                            currentLongitude = lastKnownLocation!!.longitude
+                            currentLatitude = lastKnownLocation!!.latitude
+                            mMap.moveCamera(
+                                com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(
+                                    LatLng(
+                                        lastKnownLocation!!.latitude,
+                                        lastKnownLocation!!.longitude
+                                    ), DEFAULT_ZOOM.toFloat()
+                                )
+                            )
+                            mMap.addMarker(MarkerOptions().position(LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude)).title("현재 위치"))
+
+                        } else {
+                            Log.d("TAG", "Current location is null. Using defaults.")
+                            Log.e("TAG", "Exception: %s", task.exception)
+                            mMap.moveCamera(
+                                com.google.android.gms.maps.CameraUpdateFactory
+                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
+                            )
+                            mMap.uiSettings.isMyLocationButtonEnabled = false
+                        }
+                    }
+                }
             }
+        } catch (e: SecurityException) {
+            Log.e("Exception: %s", e.message.toString())
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-    companion object {
-        private const val REQUEST_LOCATION_PERMISSION = 1
+    private fun getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            locationPermissionGranted = true
+        } else {
+            requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
+        }
     }
 
+    private fun searchPlace(x: Double, y: Double, radius: Int, query: String){
+        val retrofit = KakaoClient.getClient("https://dapi.kakao.com")
+        val api = retrofit?.create(KakaoInterface::class.java)
+        val format = "json"
+        val call = api?.getPlaceLatLng(format, x, y, radius, query, Constants.KAKAO_API_KEY)
+
+        call?.enqueue(object : Callback<PlaceInfo> {
+            override fun onResponse(call: Call<PlaceInfo>, response: Response<PlaceInfo>) {
+                Log.d("api", "call 함수 실행")
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    Log.d("api", "성공 : ${result.toString()}")
+                    result?.documents?.forEach {
+                        val latLng = LatLng(it.y.toDouble(), it.x.toDouble())
+                        mMap.addMarker(MarkerOptions().position(latLng).title(it.place_name))
+                    }
+
+                } else {
+                    Log.d("api", "실패")
+                }
+            }
+
+            override fun onFailure(call: Call<PlaceInfo>, t: Throwable) {
+                Log.d("api", "연결 실패 : $t")
+            }
+        })
+    }
+
+
+
+    companion object {
+
+        private const val DEFAULT_ZOOM = 15
+        private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+
+    }
 
 }
 
