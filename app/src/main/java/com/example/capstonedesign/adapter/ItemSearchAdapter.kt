@@ -46,7 +46,7 @@ class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>(
         return differ.currentList.size
     }
 
-    private var onItemClickListener: ((SearchItem) -> Unit)? = null
+
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = differ.currentList[position]
@@ -83,14 +83,16 @@ class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>(
             findViewById<TextView>(R.id.tv_price).text = item.pricePerUnit.toString()
             Glide.with(this).load(fullImgUrl).into(findViewById(R.id.iv_item_image))
             setOnClickListener {
-                onItemClickListener?.let { it(item)}
+                onItemClickListener?.let { it(item) }
             }
         }
 
     }
 
 
-    fun setOnItemClickListener(listener: (SearchItem) -> Unit) {
+    private var onItemClickListener: ((SearchItem) -> Unit)? = null
+
+    fun setOnItemLongClickListener(listener: (SearchItem) -> Unit) {
         onItemClickListener = listener
     }
 }

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.capstonedesign.R
 import com.example.capstonedesign.databinding.FragmentCameraBinding
 import com.example.capstonedesign.databinding.FragmentHomeBinding
 import com.example.capstonedesign.databinding.FragmentLoggedInBinding
@@ -20,8 +22,11 @@ class NotLoggedInFragment: Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentNotLoggedInBinding.inflate(inflater, container, false)
-        return binding?.root
 
+        binding.signUpButton.setOnClickListener{
+            findNavController().navigate(R.id.action_notLoggedInFragment_to_signUpFragment)
+        }
+        return binding.root
     }
 
 

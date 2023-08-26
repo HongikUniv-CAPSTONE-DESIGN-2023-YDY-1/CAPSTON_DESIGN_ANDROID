@@ -3,20 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:id="@+id/itemDetailFragment">
 
     <TextView
         android:id="@+id/tv_promotion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1+1"
+        android:textSize="20sp"
         android:textColor="@color/white"
         android:background="#FF5722"
         android:textAlignment="center"/>
     <ImageView
         android:id="@+id/iv_item_image"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:src="@drawable/ic_launcher_foreground"
         android:scaleType="centerCrop"
         android:background="@color/black"

@@ -105,7 +105,7 @@ class CameraResultFragment: Fragment(), OnMapReadyCallback {
                         }
                         Log.d("placeName", placeName)
                         addInfo(item)
-                        Log.d("placeName", placeName)
+                        Log.d("placeName", placeName)       
                     }
                 }
                 is Resource.Error -> {

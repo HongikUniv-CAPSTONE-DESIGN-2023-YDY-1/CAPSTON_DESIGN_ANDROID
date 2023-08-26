@@ -22,11 +22,11 @@
             android:id="@+id/action_homeFragment_to_mypageFragment"
             app:destination="@id/mypageFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_itemDetailFragmnet"
-            app:destination="@id/itemDetailFragmnet" />
+            android:id="@+id/action_homeFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
         <action
             android:id="@+id/action_homeFragment_to_itemDetailFragmnet2"
-            app:destination="@id/itemDetailFragmnet" />
+            app:destination="@id/itemDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -35,15 +35,19 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_itemDetailFragmnet"
-            app:destination="@id/itemDetailFragmnet" />
+            app:destination="@id/itemDetailFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_itemDetailFragmnet2"
+            app:destination="@id/itemDetailFragment" />
+
     </fragment>
     <fragment
-        android:id="@+id/itemDetailFragmnet"
-        android:name="com.example.capstonedesign.ui.ItemDetailFragmnet"
+        android:id="@+id/itemDetailFragment"
+        android:name="com.example.capstonedesign.ui.ItemDetailFragment"
         android:label="ItemDetailFragmnet" >
-        <action
-            android:id="@+id/action_itemDetailFragmnet_to_searchFragment"
-            app:destination="@id/searchFragment" />
+        <argument
+            android:name="item"
+            app:argType="com.example.capstonedesign.response.SearchItem" />
     </fragment>
     <fragment
         android:id="@+id/cameraResultFragment"
@@ -67,9 +71,17 @@
     <fragment
         android:id="@+id/notLoggedInFragment"
         android:name="com.example.capstonedesign.ui.NotLoggedInFragment"
-        android:label="NotLoggedInFragment" />
+        android:label="NotLoggedInFragment" >
+        <action
+            android:id="@+id/action_notLoggedInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loggedInFragment"
         android:name="com.example.capstonedesign.ui.LoggedInFragment"
         android:label="LoggedInFragment" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.capstonedesign.ui.SignUpFragment"
+        android:label="SignUpFragment" />
 </navigation>

@@ -2,6 +2,7 @@ package com.example.capstonedesign.response
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ItemResponse(
     @SerializedName("message")
@@ -22,7 +23,7 @@ data class SearchItem(
     val pricePerUnit: Int,
     @SerializedName("promotion")
     val promotion: String
-)
+): Serializable
 data class ResponseData(
     @SerializedName("searchItems")
     val searchItems: List<SearchItem>
