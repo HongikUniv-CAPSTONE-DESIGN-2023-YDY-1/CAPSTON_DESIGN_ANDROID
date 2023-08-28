@@ -1,11 +1,11 @@
-package com.example.capstonedesign.model
+package com.example.capstonedesign.itemViewModel
 
 
 import android.util.Log
-import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.capstonedesign.repository.Repository
 import com.example.capstonedesign.response.ItemResponse
 import com.example.capstonedesign.response.ResponseData
 import com.example.capstonedesign.response.SearchItem
@@ -13,7 +13,6 @@ import com.example.capstonedesign.utils.Resource
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Response
 import java.io.File

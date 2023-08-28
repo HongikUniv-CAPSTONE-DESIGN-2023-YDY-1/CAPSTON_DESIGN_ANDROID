@@ -26,7 +26,7 @@ import com.example.capstonedesign.R
 import com.example.capstonedesign.api.KakaoClient
 import com.example.capstonedesign.api.KakaoInterface
 import com.example.capstonedesign.databinding.FragmentCameraResultBinding
-import com.example.capstonedesign.model.ItemSearchViewModel
+import com.example.capstonedesign.itemViewModel.ItemSearchViewModel
 import com.example.capstonedesign.response.ItemResponse
 import com.example.capstonedesign.response.PlaceInfo
 import com.example.capstonedesign.utils.Constants

@@ -6,30 +6,33 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.capstonedesign.databinding.ActivityMainBinding
-import com.example.capstonedesign.model.ItemSearchViewModel
-import com.example.capstonedesign.model.ItemSearchViewModelProviderFactory
-import com.example.capstonedesign.model.Repository
+import com.example.capstonedesign.itemViewModel.ItemSearchViewModel
+import com.example.capstonedesign.itemViewModel.ItemSearchViewModelProviderFactory
+import com.example.capstonedesign.repository.Repository
 
 
 class MainActivity : AppCompatActivity() {
 
 
-    private lateinit var Binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     lateinit var viewModel: ItemSearchViewModel
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setContentView(Binding.root)
+        setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        NavigationUI.setupWithNavController(Binding.bottomNavigationView, navController)
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
 
         val itemRepository = Repository()
         val viewModelProviderFactory = ItemSearchViewModelProviderFactory(itemRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(ItemSearchViewModel::class.java)
+
     }
 }

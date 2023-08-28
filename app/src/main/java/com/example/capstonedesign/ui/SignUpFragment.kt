@@ -1,20 +1,26 @@
 package com.example.capstonedesign.ui
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.capstonedesign.R
-
+import com.example.capstonedesign.api.RetrofitInstance
 import com.example.capstonedesign.databinding.FragmentSignUpBinding
+import com.example.capstonedesign.response.SignUpRequest
+import kotlinx.coroutines.launch
 
 class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
     private lateinit var binding: FragmentSignUpBinding
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,7 +33,77 @@ class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListen
         binding.etPasswordConfirm.onFocusChangeListener = this
         return binding.root
 
+
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnSignUp.setOnClickListener {
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
+            val signUpRequest = SignUpRequest(email, password)
+            val retrofit = RetrofitInstance.api
+            viewLifecycleOwner.lifecycleScope.launch{
+                try {
+                    val response = retrofit.signUp(signUpRequest)
+                    if (response.isSuccessful) {
+                        val accessToken = response.body()?.data?.accessToken
+                        val refreshToken = response.body()?.data?.refreshToken
+                        Log.d("회원가입", "onCreateView: $accessToken")
+                        Log.d("회원가입", "onCreateView: $refreshToken")
+                        showSignUpSuccessDialog()
+                    } else if (response.code() == 400) {
+                        Log.d("회원가입 400", "${response.errorBody()}")
+                        showSignUPFailDialog()
+                    } else if (response.code() == 409) {
+                        Log.d("회원가입 409", "${response.errorBody()}")
+                        showSignUPFailDialog()
+                    }
+                } catch (e: Exception) {
+                    Log.d("회원가입", "onCreateView: ${e.message}")
+                }
+            }
+
+        }
+    }
+
+    private fun showSignUpSuccessDialog( ){
+        val title = "회원가입"
+        val message = "회원가입에 성공했습니다."
+        val alertDialogBuilder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        alertDialogBuilder.apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton("로그인하러가기") { dialog, _ ->
+                dialog.dismiss()
+                findNavController().navigate(R.id.action_signUpFragment_to_notLoggedInFragment)
+            }
+            show()
+        }
+    }
+    private fun showSignUPFailDialog() {
+        val title = "회원가입"
+        val message = "이미 가입된 이메일입니다."
+        val alertDialogBuilder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        alertDialogBuilder.apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton("확인") { dialog, _ ->
+                dialog.dismiss()
+                resetEditText()
+            }
+            show()
+        }
+    }
+
+    private fun resetEditText() {
+        binding.etEmail.text?.clear()
+        binding.etPassword.text?.clear()
+        binding.etPasswordConfirm.text?.clear()
+
+
+    }
+
 
     private fun validateEmail(): Boolean {
         var errorMessage: String? = null
@@ -46,16 +122,17 @@ class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListen
         }
         return errorMessage == null
     }
+
     private fun validatePassword(): Boolean {
         var errorMessage: String? = null
         val password = binding.etPassword.text.toString()
         if (password.isEmpty()) {
             errorMessage = "비밀번호를 입력해주세요."
-        } else if(password.length < 8) {
+        } else if (password.length < 8) {
             errorMessage = "비밀번호는 8자리 이상이어야 합니다."
-        } else if (password.length> 20) {
+        } else if (password.length > 20) {
             errorMessage = "비밀번호는 20자리 이하이어야 합니다."
-        } else if (!password.matches(Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#\$%^&*?_~])[A-Za-z\\d@#\$%^&*?_~]{8,20}\$"))) {
+        } else if (!password.matches(Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#\$%^&*?!_~])[A-Za-z\\d@#\$%^&*?!_~]{8,20}\$"))) {
             errorMessage = "비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다."
         }
         if (errorMessage != null) {
@@ -66,14 +143,19 @@ class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListen
         }
         return errorMessage == null
     }
+
     private fun validateConfirmPassword(): Boolean {
         var errorMessage: String? = null
         val password = binding.etPassword.text.toString()
         val passwordCheck = binding.etPasswordConfirm.text.toString()
         if (passwordCheck.isEmpty()) {
             errorMessage = "확인 비밀번호를 입력해주세요."
-        } else if(password != passwordCheck) {
-            errorMessage = "확인 비밀번호와 비밀번호가 일치하지 않습니다."
+        } else if (password.length < 8) {
+            errorMessage = "확인 비밀번호는 8자리 이상이어야 합니다."
+        } else if (password.length > 20) {
+            errorMessage = "확인 비밀번호는 20자리 이하이어야 합니다."
+        } else if (!password.matches(Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#\$%^&*!?_~])[A-Za-z\\d@#\$%^&*!?_~]{8,20}\$"))) {
+            errorMessage = "확인 비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다."
         }
         if (errorMessage != null) {
             binding.passwordConfirmTil.apply {
@@ -83,12 +165,29 @@ class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListen
         }
         return errorMessage == null
     }
+
+    private fun validatePasswordAndConfirmPassword(): Boolean {
+        var errorMessage: String? = null
+        val password = binding.etPassword.text.toString()
+        val confirmPassword = binding.etPasswordConfirm.text.toString()
+        if (password != confirmPassword) {
+            errorMessage = "비밀번호가 일치하지 않습니다."
+        }
+        if (errorMessage != null) {
+            binding.passwordConfirmTil.apply {
+                isErrorEnabled = true
+                error = errorMessage
+            }
+        }
+        return errorMessage == null
+    }
+
     override fun onClick(view: View?) {
 
     }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
-        if (view != null){
+        if (view != null) {
             when (view.id) {
                 R.id.et_email -> {
                     if (hasFocus) {
@@ -96,25 +195,48 @@ class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListen
                             binding.emailTil.isErrorEnabled = false
                         }
                     } else {
-                        validateEmail()
+                        if (validateEmail()) {
+                            binding.emailTil.apply {
+                                setStartIconDrawable(R.drawable.baseline_check_circle_24)
+                                setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+                            }
+                        }
                     }
                 }
+
                 R.id.et_password -> {
                     if (hasFocus) {
                         if (binding.passwordTil.isErrorEnabled) {
                             binding.passwordTil.isErrorEnabled = false
                         }
                     } else {
-                        validatePassword()
+                        if (validatePassword() && binding.etPasswordConfirm.text!!.isNotEmpty() && validateConfirmPassword() && validatePasswordAndConfirmPassword()) {
+                            if (binding.passwordConfirmTil.isErrorEnabled) {
+                                binding.passwordConfirmTil.isErrorEnabled = false
+                            }
+                            binding.passwordTil.apply {
+                                setStartIconDrawable(R.drawable.baseline_check_circle_24)
+                                setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+                            }
+                        }
                     }
                 }
+
                 R.id.et_password_confirm -> {
                     if (hasFocus) {
                         if (binding.passwordConfirmTil.isErrorEnabled) {
                             binding.passwordConfirmTil.isErrorEnabled = false
                         }
                     } else {
-                        validateConfirmPassword()
+                        if (validateConfirmPassword() && validatePassword() && validatePasswordAndConfirmPassword()) {
+                            if (binding.passwordTil.isErrorEnabled) {
+                                binding.passwordTil.isErrorEnabled = false
+                            }
+                            binding.passwordConfirmTil.apply {
+                                setStartIconDrawable(R.drawable.baseline_check_circle_24)
+                                setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+                            }
+                        }
                     }
                 }
             }
@@ -125,6 +247,6 @@ class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListen
 
         return false
     }
-
-
 }
+
+

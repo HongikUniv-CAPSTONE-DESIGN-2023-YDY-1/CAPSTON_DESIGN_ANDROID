@@ -14,8 +14,7 @@ import com.example.capstonedesign.MainActivity
 import com.example.capstonedesign.R
 import com.example.capstonedesign.adapter.ItemSearchAdapter
 import com.example.capstonedesign.databinding.FragmentSearchBinding
-import com.example.capstonedesign.model.ItemSearchViewModel
-import com.example.capstonedesign.response.ItemResponse
+import com.example.capstonedesign.itemViewModel.ItemSearchViewModel
 import com.example.capstonedesign.utils.Resource
 
 

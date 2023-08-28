@@ -1,13 +1,9 @@
-package com.example.capstonedesign.model
+package com.example.capstonedesign.repository
 
-import android.telephony.CellSignalStrength
+
 import com.example.capstonedesign.api.RetrofitInstance
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
+
 
 class Repository {
 
@@ -16,5 +12,7 @@ class Repository {
 
     suspend fun uploadImgToServer(imgUrl: MultipartBody.Part) =
         RetrofitInstance.api.postImage(imgUrl)
+
+
 
 }
