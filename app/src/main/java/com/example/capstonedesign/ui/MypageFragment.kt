@@ -44,7 +44,10 @@ class MypageFragment: Fragment(){
     }
 
     private fun checkIsLoggedIn(): Boolean {
-        return false
+        val sharedPreferences = requireActivity().getSharedPreferences("user_Token", 0)
+        val accessToken = sharedPreferences.getString("accessToken", null)
+        val refreshToken = sharedPreferences.getString("refreshToken", null)
+        return accessToken != null && refreshToken != null
     }
 
 }

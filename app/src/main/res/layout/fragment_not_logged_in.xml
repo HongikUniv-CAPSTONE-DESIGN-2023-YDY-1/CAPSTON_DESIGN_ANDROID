@@ -18,15 +18,15 @@
 
 
         <EditText
-            android:id="@+id/editTextId"
+            android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="아이디"
+            android:hint="이메일"
             android:inputType="text"
             android:maxLines="1" />
 
         <EditText
-            android:id="@+id/editTextPassWord"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호"
@@ -39,13 +39,13 @@
             android:orientation="vertical"
             android:weightSum="1">
             <Button
-                android:id="@+id/loginButton"
+                android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text="로그인"/>
             <Button
-                android:id="@+id/signUpButton"
+                android:id="@+id/btn_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
