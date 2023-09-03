@@ -1,4 +1,4 @@
-package com.example.capstonedesign.api
+package com.example.capstonedesign.data.api
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

@@ -1,11 +1,14 @@
 package com.example.capstonedesign.ui
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.capstonedesign.R
 
 import com.example.capstonedesign.databinding.FragmentMypageBinding
@@ -41,10 +44,12 @@ class MypageFragment: Fragment(){
         binding.viewNotLoggedIn.setOnClickListener {
             it.findNavController().navigate(R.id.action_mypageFragment_to_notLoggedInFragment)
         }
+
+
     }
 
     private fun checkIsLoggedIn(): Boolean {
-        val sharedPreferences = requireActivity().getSharedPreferences("user_Token", 0)
+        val sharedPreferences = requireActivity().getSharedPreferences("user_Token", Context.MODE_PRIVATE)
         val accessToken = sharedPreferences.getString("accessToken", null)
         val refreshToken = sharedPreferences.getString("refreshToken", null)
         return accessToken != null && refreshToken != null

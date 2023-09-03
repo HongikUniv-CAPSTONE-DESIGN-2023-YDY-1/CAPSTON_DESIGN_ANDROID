@@ -1,14 +1,14 @@
-package com.example.capstonedesign.itemViewModel
+package com.example.capstonedesign.data.itemViewModel
 
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.capstonedesign.repository.Repository
-import com.example.capstonedesign.response.ItemResponse
-import com.example.capstonedesign.response.ResponseData
-import com.example.capstonedesign.response.SearchItem
+import com.example.capstonedesign.data.repository.Repository
+import com.example.capstonedesign.data.response.ItemResponse
+import com.example.capstonedesign.data.response.ResponseData
+import com.example.capstonedesign.data.response.SearchItem
 import com.example.capstonedesign.utils.Resource
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

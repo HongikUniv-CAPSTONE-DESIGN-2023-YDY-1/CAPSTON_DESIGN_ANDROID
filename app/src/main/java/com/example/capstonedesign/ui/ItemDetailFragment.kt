@@ -10,12 +10,14 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.capstonedesign.R
 import com.example.capstonedesign.databinding.FragmentItemDetailBinding
-import com.example.capstonedesign.response.SearchItem
+import com.example.capstonedesign.data.response.SearchItem
+
 
 class ItemDetailFragment: Fragment() {
 
     private lateinit var binding: FragmentItemDetailBinding
-    private val args: ItemDetailFragmentArgs by navArgs()
+    val args: ItemDetailFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,7 +26,6 @@ class ItemDetailFragment: Fragment() {
         binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         val item = args.item
         refactoringInfo(item)
-
         return binding.root
     }
 

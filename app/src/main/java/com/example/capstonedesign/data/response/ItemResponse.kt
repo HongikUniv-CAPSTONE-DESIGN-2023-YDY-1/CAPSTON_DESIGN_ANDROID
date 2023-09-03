@@ -1,8 +1,10 @@
-package com.example.capstonedesign.response
+package com.example.capstonedesign.data.response
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import kotlinx.parcelize.Parcelize
+
 
 data class ItemResponse(
     @SerializedName("message")
@@ -10,6 +12,7 @@ data class ItemResponse(
     @SerializedName("data")
     var response: ResponseData
 )
+@Parcelize
 data class SearchItem(
     @SerializedName("brand")
     val brand: String,
@@ -23,7 +26,7 @@ data class SearchItem(
     val pricePerUnit: Int,
     @SerializedName("promotion")
     val promotion: String
-): Serializable
+ ): Parcelable
 data class ResponseData(
     @SerializedName("searchItems")
     val searchItems: List<SearchItem>

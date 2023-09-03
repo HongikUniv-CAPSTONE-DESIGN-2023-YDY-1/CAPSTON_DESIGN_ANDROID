@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    android:id="@+id/cameraResultFragment">
+    android:id="@+id/cameraResultFragment"
+    tools:context="com.example.capstonedesign.ui.CameraResultFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

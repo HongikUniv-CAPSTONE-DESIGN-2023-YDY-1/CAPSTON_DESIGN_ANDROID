@@ -7,6 +7,8 @@ plugins {
     
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-parcelize")
+
 }
 
 android {
@@ -42,6 +44,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -85,9 +88,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     //viewmodel
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.preference:preference-ktx:1.2.1")
 
-
+    //DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0-alpha06")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
 
 }

@@ -13,12 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.capstonedesign.R
-import com.example.capstonedesign.api.RetrofitInstance
+import com.example.capstonedesign.data.api.RetrofitInstance
 import com.example.capstonedesign.databinding.FragmentSignUpBinding
-import com.example.capstonedesign.response.SignUpRequest
+
+import com.example.capstonedesign.data.response.User
 import kotlinx.coroutines.launch
 
-class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
+class SignUpFragment: Fragment(),  View.OnFocusChangeListener, View.OnKeyListener {
 
     private lateinit var binding: FragmentSignUpBinding
     override fun onCreateView(
@@ -41,7 +42,7 @@ class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListen
         binding.btnSignUp.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            val signUpRequest = SignUpRequest(email, password)
+            val signUpRequest = User(email, password)
             val retrofit = RetrofitInstance.api
             viewLifecycleOwner.lifecycleScope.launch{
                 try {
@@ -182,9 +183,7 @@ class SignUpFragment: Fragment(), View.OnClickListener, View.OnFocusChangeListen
         return errorMessage == null
     }
 
-    override fun onClick(view: View?) {
 
-    }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
         if (view != null) {

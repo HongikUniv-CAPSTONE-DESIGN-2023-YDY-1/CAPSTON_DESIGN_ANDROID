@@ -3,13 +3,17 @@ package com.example.capstonedesign
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.capstonedesign.data.UserPreferences
 import com.example.capstonedesign.databinding.ActivityMainBinding
-import com.example.capstonedesign.itemViewModel.ItemSearchViewModel
-import com.example.capstonedesign.itemViewModel.ItemSearchViewModelProviderFactory
-import com.example.capstonedesign.repository.Repository
+import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModel
+import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModelProviderFactory
+import com.example.capstonedesign.data.repository.Repository
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     lateinit var viewModel: ItemSearchViewModel
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,16 +39,18 @@ class MainActivity : AppCompatActivity() {
         val viewModelProviderFactory = ItemSearchViewModelProviderFactory(itemRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(ItemSearchViewModel::class.java)
 
-        val sharedPreferences = getSharedPreferences("user_Token", MODE_PRIVATE)
-        val accessToken = sharedPreferences.getString("accessToken", null)
-        val refreshToken = sharedPreferences.getString("refreshToken", null)
-        if (accessToken != null && refreshToken != null) {
-            Log.d("엑세스토큰", "onCreate: $accessToken")
-            Log.d("리프레시토큰", "onCreate: $refreshToken")
-        } else {
-            Log.d("토큰", "onCreate: 토큰없음")
-        }
-
-
+        val userPreferences = UserPreferences(this)
+        userPreferences.accessToken.asLiveData().observe(this, Observer {
+           Toast.makeText(this, it ?: "Token is Null", Toast.LENGTH_SHORT).show()
+       })
+        userPreferences.refreshToken.asLiveData().observe(this, Observer {
+           Toast.makeText(this, it ?: "Token is Null", Toast.LENGTH_SHORT).show()
+       })
+        userPreferences.userEmail.asLiveData().observe(this, Observer {
+           Toast.makeText(this, it ?: "Email is Null", Toast.LENGTH_SHORT).show()
+       })
+        userPreferences.userPassword.asLiveData().observe(this, Observer {
+           Toast.makeText(this, it ?: "Password is Null", Toast.LENGTH_SHORT).show()
+       })
     }
 }

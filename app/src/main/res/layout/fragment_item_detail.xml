@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:weightSum="1"
-    android:id="@+id/itemDetailFragment">
+    android:id="@+id/itemDetailFragment"
+    tools:context="com.example.capstonedesign.ui.ItemDetailFragment">
 
     <TextView
         android:id="@+id/tv_promotion"

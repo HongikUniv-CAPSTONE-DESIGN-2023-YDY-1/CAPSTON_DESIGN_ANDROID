@@ -12,9 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstonedesign.MainActivity
 import com.example.capstonedesign.R
-import com.example.capstonedesign.adapter.ItemSearchAdapter
+import com.example.capstonedesign.data.adapter.ItemSearchAdapter
 import com.example.capstonedesign.databinding.FragmentSearchBinding
-import com.example.capstonedesign.itemViewModel.ItemSearchViewModel
+import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModel
 import com.example.capstonedesign.utils.Resource
 
 
@@ -90,10 +90,10 @@ class SearchFragment: Fragment(){
         }
         itemadapter.setOnItemLongClickListener {
             val bundle = Bundle().apply {
-                putSerializable("item", it)
+                putParcelable("item", it)
             }
             findNavController().navigate(
-                R.id.action_searchFragment_to_itemDetailFragmnet,
+                R.id.action_searchFragment_to_itemDetailFragment,
                 bundle
             )
         }

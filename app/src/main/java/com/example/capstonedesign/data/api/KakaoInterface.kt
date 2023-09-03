@@ -1,7 +1,7 @@
-package com.example.capstonedesign.api
+package com.example.capstonedesign.data.api
 
 
-import com.example.capstonedesign.response.PlaceInfo
+import com.example.capstonedesign.data.response.PlaceInfo
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET

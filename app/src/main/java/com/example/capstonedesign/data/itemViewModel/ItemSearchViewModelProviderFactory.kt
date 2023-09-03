@@ -1,8 +1,8 @@
-package com.example.capstonedesign.itemViewModel
+package com.example.capstonedesign.data.itemViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.capstonedesign.repository.Repository
+import com.example.capstonedesign.data.repository.Repository
 
 class ItemSearchViewModelProviderFactory(
     private val itemRepository: Repository

@@ -1,4 +1,4 @@
-package com.example.capstonedesign.response
+package com.example.capstonedesign.data.response
 
 
 
@@ -7,12 +7,12 @@ data class AccessTokenResponse(
     val refreshToken: String
 
 )
-data class SignUpRequest(
+data class User(
     val email: String,
     val password: String,
 
 )
-data class SignUpResponse(
+data class SignResponse(
     val data: AccessTokenResponse,
     val message: String
 )

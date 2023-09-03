@@ -1,9 +1,8 @@
-package com.example.capstonedesign.repository
+package com.example.capstonedesign.data.repository
 
 
-import com.example.capstonedesign.api.RetrofitInstance
-import com.example.capstonedesign.response.SignUpRequest
-import com.example.capstonedesign.response.SignUpResponse
+import com.example.capstonedesign.data.api.RetrofitInstance
+
 import okhttp3.MultipartBody
 
 

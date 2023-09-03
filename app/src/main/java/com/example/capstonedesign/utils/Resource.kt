@@ -1,6 +1,6 @@
 package com.example.capstonedesign.utils
 
-import com.example.capstonedesign.response.SignUpResponse
+
 
 sealed class Resource<T>(
     val data: T? = null,

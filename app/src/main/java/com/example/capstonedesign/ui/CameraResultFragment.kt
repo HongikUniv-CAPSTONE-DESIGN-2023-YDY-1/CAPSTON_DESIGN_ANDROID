@@ -23,12 +23,12 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.capstonedesign.MainActivity
 import com.example.capstonedesign.R
-import com.example.capstonedesign.api.KakaoClient
-import com.example.capstonedesign.api.KakaoInterface
+import com.example.capstonedesign.data.api.KakaoClient
+import com.example.capstonedesign.data.api.KakaoInterface
 import com.example.capstonedesign.databinding.FragmentCameraResultBinding
-import com.example.capstonedesign.itemViewModel.ItemSearchViewModel
-import com.example.capstonedesign.response.ItemResponse
-import com.example.capstonedesign.response.PlaceInfo
+import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModel
+import com.example.capstonedesign.data.response.ItemResponse
+import com.example.capstonedesign.data.response.PlaceInfo
 import com.example.capstonedesign.utils.Constants
 import com.example.capstonedesign.utils.Resource
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -158,7 +158,7 @@ class CameraResultFragment: Fragment(), OnMapReadyCallback {
     private fun addInfo(result: ItemResponse){
         if (result.response.searchItems.isEmpty()){
             Toast.makeText(requireContext(), "검색 결과가 없습니다. 사진을 다시 촬영해주세요", Toast.LENGTH_SHORT).show()
-            view?.findNavController()?.navigate(R.id.action_cameraResultFragment_to_cameraFragment)
+            view?.findNavController()?.navigate(R.id.action_cameraFragment_to_cameraResultFragment)
             return
         }
         val response = result.response.searchItems[0]

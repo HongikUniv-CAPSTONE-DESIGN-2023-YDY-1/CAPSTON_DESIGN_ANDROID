@@ -1,4 +1,4 @@
-package com.example.capstonedesign.response
+package com.example.capstonedesign.data.response
 
 
 

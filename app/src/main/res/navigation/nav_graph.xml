@@ -4,15 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
-    <fragment
-        android:id="@+id/cameraFragment"
-        android:name="com.example.capstonedesign.ui.CameraFragment"
-        android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" >
-        <action
-            android:id="@+id/action_cameraFragment_to_cameraResultFragment"
-            app:destination="@id/cameraResultFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.capstonedesign.ui.HomeFragment"
@@ -21,12 +13,18 @@
         <action
             android:id="@+id/action_homeFragment_to_mypageFragment"
             app:destination="@id/mypageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.capstonedesign.ui.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" >
         <action
-            android:id="@+id/action_homeFragment_to_itemDetailFragment"
-            app:destination="@id/itemDetailFragment" />
+            android:id="@+id/action_cameraFragment_to_cameraResultFragment"
+            app:destination="@id/cameraResultFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_itemDetailFragmnet2"
-            app:destination="@id/itemDetailFragment" />
+            android:id="@+id/action_cameraFragment_self"
+            app:destination="@id/cameraFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -34,33 +32,28 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_searchFragment_to_itemDetailFragmnet"
+            android:id="@+id/action_searchFragment_to_itemDetailFragment"
             app:destination="@id/itemDetailFragment" />
-        <action
-            android:id="@+id/action_searchFragment_to_itemDetailFragmnet2"
-            app:destination="@id/itemDetailFragment" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/itemDetailFragment"
-        android:name="com.example.capstonedesign.ui.ItemDetailFragment"
-        android:label="ItemDetailFragmnet" >
-        <argument
-            android:name="item"
-            app:argType="com.example.capstonedesign.response.SearchItem" />
     </fragment>
     <fragment
         android:id="@+id/cameraResultFragment"
         android:name="com.example.capstonedesign.ui.CameraResultFragment"
-        android:label="CameraResultFragment" >
-        <action
-            android:id="@+id/action_cameraResultFragment_to_cameraFragment"
-            app:destination="@id/cameraFragment" />
+        android:label="fragment_camera_result"
+        tools:layout="@layout/fragment_camera_result" />
+    <fragment
+        android:id="@+id/itemDetailFragment"
+        android:name="com.example.capstonedesign.ui.ItemDetailFragment"
+        android:label="fragment_item_detail"
+        tools:layout="@layout/fragment_item_detail" >
+        <argument
+            android:name="item"
+            app:argType="com.example.capstonedesign.data.response.SearchItem" />
     </fragment>
     <fragment
         android:id="@+id/mypageFragment"
         android:name="com.example.capstonedesign.ui.MypageFragment"
-        android:label="MypageFragment" >
+        android:label="fragment_mypage"
+        tools:layout="@layout/fragment_mypage" >
         <action
             android:id="@+id/action_mypageFragment_to_loggedInFragment"
             app:destination="@id/loggedInFragment" />
@@ -69,21 +62,27 @@
             app:destination="@id/notLoggedInFragment" />
     </fragment>
     <fragment
+        android:id="@+id/loggedInFragment"
+        android:name="com.example.capstonedesign.ui.LoggedInFragment"
+        android:label="fragment_logged_in"
+        tools:layout="@layout/fragment_logged_in" />
+    <fragment
         android:id="@+id/notLoggedInFragment"
         android:name="com.example.capstonedesign.ui.NotLoggedInFragment"
-        android:label="NotLoggedInFragment" >
+        android:label="fragment_not_logged_in"
+        tools:layout="@layout/fragment_not_logged_in" >
         <action
             android:id="@+id/action_notLoggedInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_notLoggedInFragment_to_mypageFragment"
+            app:destination="@id/mypageFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/loggedInFragment"
-        android:name="com.example.capstonedesign.ui.LoggedInFragment"
-        android:label="LoggedInFragment" />
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.capstonedesign.ui.SignUpFragment"
-        android:label="SignUpFragment" >
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signUpFragment_to_notLoggedInFragment"
             app:destination="@id/notLoggedInFragment" />
