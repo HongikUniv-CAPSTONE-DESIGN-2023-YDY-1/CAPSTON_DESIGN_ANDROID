@@ -1,6 +1,7 @@
 package com.example.capstonedesign.ui
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.capstonedesign.MainActivity
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.api.IRetrofit
 import com.example.capstonedesign.data.authViewModel.AuthViewModel
@@ -41,9 +43,12 @@ class NotLoggedInFragment: BaseFragment<AuthViewModel, FragmentNotLoggedInBindin
                     lifecycleScope.launch {
                         userPreferences.saveToken(it.value.data.accessToken, it.value.data.refreshToken)
                         userPreferences.saveEmailAndPassword(binding.etEmail.text.toString().trim(), binding.etPassword.text.toString().trim())
+                        userPreferences.saveLoginStatus(true)
                     }
-                    findNavController().navigate(R.id.action_notLoggedInFragment_to_mypageFragment)
                     Toast.makeText(requireContext(), "로그인성공", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                 }
                 is SignResource.Failure ->{
                     Toast.makeText(requireContext(), "로그인 실패", Toast.LENGTH_SHORT).show()

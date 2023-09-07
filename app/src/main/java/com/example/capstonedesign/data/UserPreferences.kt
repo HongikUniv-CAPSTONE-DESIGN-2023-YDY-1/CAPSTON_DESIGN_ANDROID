@@ -4,6 +4,7 @@ package com.example.capstonedesign.data
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.createDataStore
@@ -39,6 +40,10 @@ class UserPreferences(
         get() = dataStore.data.map { preferences ->
             preferences[USER_PASSWORD]
         }
+    val loginStatus: Flow<Boolean?>
+        get() = dataStore.data.map { preferences ->
+            preferences[LOGIN_STATUS] ?: false
+        }
     suspend fun saveToken(accessToken: String, refreshToken: String){
         dataStore.edit { preferences ->
             preferences[ACCESS_TOKEN] = accessToken
@@ -51,12 +56,23 @@ class UserPreferences(
             preferences[USER_PASSWORD] = password
         }
     }
+    suspend fun saveLoginStatus(status: Boolean){
+        dataStore.edit { preferences ->
+            preferences[LOGIN_STATUS] = status
+        }
+    }
 
+    suspend fun clear(){
+        dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
     companion object{
         private val ACCESS_TOKEN = stringPreferencesKey("access_token")
         private val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
         private val USER_EMAIL = stringPreferencesKey("user_email")
         private val USER_PASSWORD = stringPreferencesKey("user_password")
+        private val LOGIN_STATUS = booleanPreferencesKey("login_status")
     }
 
 }

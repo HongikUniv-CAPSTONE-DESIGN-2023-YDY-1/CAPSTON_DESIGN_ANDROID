@@ -7,19 +7,6 @@
     android:id="@+id/homeFragment"
     tools:context="com.example.capstonedesign.ui.HomeFragment">
 
-    <ImageButton
-        android:id="@+id/btn_mypage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/white"
-        android:src="@drawable/mypage_icon"
-
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <GridLayout
 
         android:layout_width="match_parent"
@@ -29,7 +16,7 @@
         android:paddingRight="20dp"
         android:rowCount="2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_mypage"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
         <ImageView

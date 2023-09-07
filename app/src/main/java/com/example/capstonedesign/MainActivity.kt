@@ -52,5 +52,8 @@ class MainActivity : AppCompatActivity() {
         userPreferences.userPassword.asLiveData().observe(this, Observer {
            Toast.makeText(this, it ?: "Password is Null", Toast.LENGTH_SHORT).show()
        })
+        userPreferences.loginStatus.asLiveData().observe(this, Observer {
+           Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+       })
     }
 }

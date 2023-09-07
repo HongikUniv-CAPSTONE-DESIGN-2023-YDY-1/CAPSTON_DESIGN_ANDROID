@@ -9,11 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.capstonedesign.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_mypageFragment"
-            app:destination="@id/mypageFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.capstonedesign.ui.CameraFragment"
@@ -65,7 +61,13 @@
         android:id="@+id/loggedInFragment"
         android:name="com.example.capstonedesign.ui.LoggedInFragment"
         android:label="fragment_logged_in"
-        tools:layout="@layout/fragment_logged_in" />
+        tools:layout="@layout/fragment_logged_in" >
+        <action
+            android:id="@+id/action_loggedInFragment_to_mypageFragment"
+            app:destination="@id/mypageFragment"
+            app:popUpTo="@id/loggedInFragment"
+            app:popUpToInclusive="false"/>
+    </fragment>
     <fragment
         android:id="@+id/notLoggedInFragment"
         android:name="com.example.capstonedesign.ui.NotLoggedInFragment"
@@ -76,7 +78,9 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_notLoggedInFragment_to_mypageFragment"
-            app:destination="@id/mypageFragment" />
+            app:destination="@id/mypageFragment"
+            app:popUpTo="@id/notLoggedInFragment"
+            app:popUpToInclusive="false"/>
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"

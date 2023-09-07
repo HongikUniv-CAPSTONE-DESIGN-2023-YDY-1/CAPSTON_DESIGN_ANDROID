@@ -31,9 +31,7 @@ class HomeFragment: Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.btnMypage.setOnClickListener {
-            it.findNavController().navigate(R.id.action_homeFragment_to_mypageFragment)
-        }
+
 
 
 
