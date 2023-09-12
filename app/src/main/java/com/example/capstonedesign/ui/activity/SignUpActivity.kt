@@ -1,69 +1,64 @@
-package com.example.capstonedesign.ui
+package com.example.capstonedesign.ui.activity
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.ViewTreeLifecycleOwner
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.api.RetrofitInstance
-import com.example.capstonedesign.databinding.FragmentSignUpBinding
-
 import com.example.capstonedesign.data.response.User
+import com.example.capstonedesign.databinding.ActivitySignUpBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class SignUpFragment: Fragment(),  View.OnFocusChangeListener, View.OnKeyListener {
-
-    private lateinit var binding: FragmentSignUpBinding
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSignUpBinding.inflate(inflater, container, false)
+class SignUpActivity : AppCompatActivity(), View.OnFocusChangeListener, View.OnKeyListener {
+    private lateinit var binding: ActivitySignUpBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.etEmail.onFocusChangeListener = this
         binding.etPassword.onFocusChangeListener = this
         binding.etPasswordConfirm.onFocusChangeListener = this
-        return binding.root
 
 
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         binding.btnSignUp.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            val signUpRequest = User(email, password)
+            val signUpRequest = User(email = email, password = password)
             val retrofit = RetrofitInstance.api
-            viewLifecycleOwner.lifecycleScope.launch{
+            CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val response = retrofit.signUp(signUpRequest)
-                    if (response.isSuccessful) {
-                        val accessToken = response.body()?.data?.accessToken
-                        val refreshToken = response.body()?.data?.refreshToken
-                        Log.d("회원가입", "onCreateView: $accessToken")
-                        Log.d("회원가입", "onCreateView: $refreshToken")
-                        showSignUpSuccessDialog()
-                    } else if (response.code() == 400) {
-                        Log.d("회원가입 400", "${response.errorBody()}")
-                        showSignUPFailDialog()
-                    } else if (response.code() == 409) {
-                        Log.d("회원가입 409", "${response.errorBody()}")
-                        showSignUPFailDialog()
+                    withContext(Dispatchers.Main) {
+                        if (response.isSuccessful) {
+                            val accessToken = response.body()?.data?.accessToken
+                            val refreshToken = response.body()?.data?.refreshToken
+                            Log.d("회원가입", "onCreateView: $accessToken")
+                            Log.d("회원가입", "onCreateView: $refreshToken")
+                            showSignUpSuccessDialog()
+                        } else if (response.code() == 400) {
+                            Log.d("회원가입 400", "${response.errorBody()}")
+                            showSignUPFailDialog()
+                        } else if (response.code() == 409) {
+                            Log.d("회원가입 409", "${response.errorBody()}")
+                            showSignUPFailDialog()
+                        }
                     }
                 } catch (e: Exception) {
                     Log.d("회원가입", "onCreateView: ${e.message}")
                 }
             }
+
 
         }
     }
@@ -71,13 +66,13 @@ class SignUpFragment: Fragment(),  View.OnFocusChangeListener, View.OnKeyListene
     private fun showSignUpSuccessDialog( ){
         val title = "회원가입"
         val message = "회원가입에 성공했습니다."
-        val alertDialogBuilder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        val alertDialogBuilder = androidx.appcompat.app.AlertDialog.Builder(this)
         alertDialogBuilder.apply {
             setTitle(title)
             setMessage(message)
             setPositiveButton("로그인하러가기") { dialog, _ ->
                 dialog.dismiss()
-                findNavController().navigate(R.id.action_signUpFragment_to_notLoggedInFragment)
+                finish()
             }
             show()
         }
@@ -85,7 +80,7 @@ class SignUpFragment: Fragment(),  View.OnFocusChangeListener, View.OnKeyListene
     private fun showSignUPFailDialog() {
         val title = "회원가입"
         val message = "이미 가입된 이메일입니다."
-        val alertDialogBuilder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        val alertDialogBuilder = androidx.appcompat.app.AlertDialog.Builder(this)
         alertDialogBuilder.apply {
             setTitle(title)
             setMessage(message)
@@ -247,5 +242,3 @@ class SignUpFragment: Fragment(),  View.OnFocusChangeListener, View.OnKeyListene
         return false
     }
 }
-
-

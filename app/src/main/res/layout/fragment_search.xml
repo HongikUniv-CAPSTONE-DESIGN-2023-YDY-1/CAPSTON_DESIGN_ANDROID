@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/searchFragment"
     android:orientation="vertical"
-    tools:context="com.example.capstonedesign.ui.SearchFragment">
+    tools:context="com.example.capstonedesign.ui.fragment.SearchFragment">
     
     <LinearLayout
         android:layout_width="match_parent"

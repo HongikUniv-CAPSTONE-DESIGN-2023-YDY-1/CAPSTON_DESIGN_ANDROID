@@ -1,15 +1,15 @@
-package com.example.capstonedesign
+package com.example.capstonedesign.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.capstonedesign.data.UserPreferences
+import com.example.capstonedesign.R
+import com.example.capstonedesign.utils.UserPreferences
 import com.example.capstonedesign.databinding.ActivityMainBinding
 import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModel
 import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModelProviderFactory

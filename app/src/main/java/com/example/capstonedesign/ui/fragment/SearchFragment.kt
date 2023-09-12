@@ -1,4 +1,4 @@
-package com.example.capstonedesign.ui
+package com.example.capstonedesign.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.capstonedesign.MainActivity
+import com.example.capstonedesign.ui.activity.MainActivity
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.adapter.ItemSearchAdapter
 import com.example.capstonedesign.databinding.FragmentSearchBinding

@@ -1,5 +1,5 @@
 
-package com.example.capstonedesign.ui
+package com.example.capstonedesign.ui.fragment
 
 import android.content.pm.PackageManager
 import android.net.Uri

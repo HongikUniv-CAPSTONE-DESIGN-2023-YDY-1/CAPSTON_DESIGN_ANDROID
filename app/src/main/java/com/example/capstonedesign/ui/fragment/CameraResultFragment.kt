@@ -1,4 +1,4 @@
-package com.example.capstonedesign.ui
+package com.example.capstonedesign.ui.fragment
 
 
 
@@ -21,7 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
-import com.example.capstonedesign.MainActivity
+import com.example.capstonedesign.ui.activity.MainActivity
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.api.KakaoClient
 import com.example.capstonedesign.data.api.KakaoInterface

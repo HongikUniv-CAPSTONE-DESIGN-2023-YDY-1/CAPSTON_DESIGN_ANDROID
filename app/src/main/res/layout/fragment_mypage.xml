@@ -5,56 +5,101 @@
     android:id="@+id/mypageFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.capstonedesign.ui.MypageFragment">
+    tools:context="com.example.capstonedesign.ui.fragment.MypageFragment">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/view_not_logged_in">
+        android:background="@drawable/main_background"
+        android:text="마이페이지"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:src="@drawable/ic_launcher_foreground" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="로그인이 필요합니다."
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="0.7"/>
-
-    </LinearLayout>
     <LinearLayout
+        android:id="@+id/linearlayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
+        android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/view_logged_in">
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintVertical_weight="1">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/quantum_grey100" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:src="@drawable/ic_launcher_foreground" />
+        <android.widget.Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_background"
+            android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+            android:text="로그인"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/tv_user_email"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="님 안녕하세요!"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="0.7"/>
+        <android.widget.Button
+            android:id="@+id/btn_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_background"
+            android:clickable="false"
+            android:text="이메일"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/quantum_grey100" />
+
+        <android.widget.Button
+            android:id="@+id/btn_change_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_background"
+            android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+            android:text="비밀번호변경"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/quantum_grey100" />
+
+        <android.widget.Button
+            android:id="@+id/btn_go_to_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_background"
+            android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+            android:text="내 리뷰 보기"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/quantum_grey100" />
+        <android.widget.Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_background"
+            android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+            android:text="로그아웃"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.capstonedesign.ui
+package com.example.capstonedesign.ui.fragment
 
 
 import android.content.Context

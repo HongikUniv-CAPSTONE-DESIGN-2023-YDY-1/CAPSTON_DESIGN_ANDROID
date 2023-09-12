@@ -16,3 +16,4 @@ data class SignResponse(
     val data: AccessTokenResponse,
     val message: String
 )
+
