@@ -12,10 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.example.capstonedesign.R
+import com.example.capstonedesign.databinding.FragmentMypageBinding
+
 import com.example.capstonedesign.ui.activity.LogInActivity
 import com.example.capstonedesign.utils.UserPreferences
 
-import com.example.capstonedesign.databinding.FragmentMypageBinding
 import com.example.capstonedesign.ui.activity.ChangePasswordActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.launch

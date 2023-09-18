@@ -50,6 +50,7 @@
                 android:textColor="@color/black"
                 android:text="가격"
                 android:textSize="20sp"/>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -25,6 +25,9 @@ class ItemSearchViewModel(
 
     val Items: MutableLiveData<Resource<ItemResponse>> = MutableLiveData()
 
+    val CamerItems: MutableLiveData<Resource<ItemResponse>> = MutableLiveData()
+
+
 
     init {
         getAllItems()
@@ -63,13 +66,13 @@ class ItemSearchViewModel(
         val file = File(imgUrl)
         val imageRequestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
         val request = MultipartBody.Part.createFormData("img", file.name, imageRequestBody)
-        Items.postValue(Resource.Loading())
+        CamerItems.postValue(Resource.Loading())
         val response = itemRepository.uploadImgToServer(request)
         response.body()?.let { resultResponse ->
             Log.d("ItemSearchViewModel", "uploadImgToServer: $resultResponse")
 
         }
-        Items.postValue(Resource.Success(response.body()!!))
+        CamerItems.postValue(handleAllItemsResponse(response))
     }
 
     private fun handleAllItemsResponse(response: Response<ItemResponse>): Resource<ItemResponse> {

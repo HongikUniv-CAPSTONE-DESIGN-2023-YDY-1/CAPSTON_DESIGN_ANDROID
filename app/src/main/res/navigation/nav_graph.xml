@@ -14,37 +14,12 @@
         android:id="@+id/cameraFragment"
         android:name="com.example.capstonedesign.ui.fragment.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" >
-        <action
-            android:id="@+id/action_cameraFragment_to_cameraResultFragment"
-            app:destination="@id/cameraResultFragment" />
-        <action
-            android:id="@+id/action_cameraFragment_self"
-            app:destination="@id/cameraFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_camera" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.capstonedesign.ui.fragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/action_searchFragment_to_itemDetailFragment"
-            app:destination="@id/itemDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/cameraResultFragment"
-        android:name="com.example.capstonedesign.ui.fragment.CameraResultFragment"
-        android:label="fragment_camera_result"
-        tools:layout="@layout/fragment_camera_result" />
-    <fragment
-        android:id="@+id/itemDetailFragment"
-        android:name="com.example.capstonedesign.ui.fragment.ItemDetailFragment"
-        android:label="fragment_item_detail"
-        tools:layout="@layout/fragment_item_detail" >
-        <argument
-            android:name="item"
-            app:argType="com.example.capstonedesign.data.response.SearchItem" />
-    </fragment>
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/mypageFragment"
         android:name="com.example.capstonedesign.ui.fragment.MypageFragment"

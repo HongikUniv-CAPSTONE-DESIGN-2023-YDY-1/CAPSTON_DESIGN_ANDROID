@@ -1,6 +1,7 @@
 
 package com.example.capstonedesign.ui.fragment
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -17,22 +18,23 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import com.example.capstonedesign.R
 import com.example.capstonedesign.databinding.FragmentCameraBinding
+import com.example.capstonedesign.ui.activity.CameraSearchResultActivity
 import com.example.capstonedesign.utils.Constants.Companion.TAG
 import java.io.File
 import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+
+
 class CameraFragment: Fragment(){
 
     private lateinit var binding: FragmentCameraBinding
-
     private var imageCapture: ImageCapture? = null
+
     private lateinit var outputDirectory: File
     private lateinit var savedUri: Uri
     private lateinit var cameraExecutor: ExecutorService
@@ -72,8 +74,10 @@ class CameraFragment: Fragment(){
         }
         binding.capturePreview.setOnClickListener {
             if (::savedUri.isInitialized) {
-                val bundle = bundleOf("capturedPhoto" to savedUri.toString())
-                view.findNavController().navigate(R.id.action_cameraFragment_to_cameraResultFragment, bundle)
+                val intent = Intent(activity, CameraSearchResultActivity::class.java)
+                intent.putExtra("imgUri", savedUri.toString())
+                Log.d("imgUri", savedUri.toString())
+                startActivity(intent)
             } else {
                 Toast.makeText(requireContext(), "사진을 먼저 촬영해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -115,12 +119,14 @@ class CameraFragment: Fragment(){
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         val cameraProvider = cameraProviderFuture.get()
         val preview = Preview.Builder().build()
-        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+        val cameraSelector = CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+            .build()
         cameraProviderFuture.addListener(Runnable {
             try {
                 preview.setSurfaceProvider(binding.viewFinder.surfaceProvider)
                 imageCapture = ImageCapture.Builder()
-                    .setTargetAspectRatio(AspectRatio.RATIO_16_9)
+                    .setTargetAspectRatio(AspectRatio.RATIO_4_3)
                     .build()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -157,6 +163,11 @@ class CameraFragment: Fragment(){
 
     override fun onDestroyView() {
         super.onDestroyView()
+        cameraExecutor.shutdown()
+    }
+
+    override fun onPause() {
+        super.onPause()
         cameraExecutor.shutdown()
     }
 

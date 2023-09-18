@@ -14,6 +14,8 @@ data class ItemResponse(
 )
 @Parcelize
 data class SearchItem(
+    @SerializedName("id")
+    val id: Int,
     @SerializedName("brand")
     val brand: String,
     @SerializedName("imgUrl")

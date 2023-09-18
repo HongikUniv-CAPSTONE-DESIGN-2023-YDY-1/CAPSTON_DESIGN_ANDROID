@@ -61,6 +61,11 @@ class UserPreferences(
             preferences[LOGIN_STATUS] = status
         }
     }
+    suspend fun saveNewPassword(password: String){
+        dataStore.edit { preferences ->
+            preferences[USER_PASSWORD] = password
+        }
+    }
 
     suspend fun clear(){
         dataStore.edit { preferences ->

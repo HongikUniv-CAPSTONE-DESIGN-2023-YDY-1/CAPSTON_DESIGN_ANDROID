@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(ItemSearchViewModel::class.java)
 
         val userPreferences = UserPreferences(this)
-        userPreferences.accessToken.asLiveData().observe(this, Observer {
+        /*userPreferences.accessToken.asLiveData().observe(this, Observer {
            Toast.makeText(this, it ?: "Token is Null", Toast.LENGTH_SHORT).show()
        })
         userPreferences.refreshToken.asLiveData().observe(this, Observer {
@@ -54,6 +54,6 @@ class MainActivity : AppCompatActivity() {
        })
         userPreferences.loginStatus.asLiveData().observe(this, Observer {
            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-       })
+       })*/
     }
 }

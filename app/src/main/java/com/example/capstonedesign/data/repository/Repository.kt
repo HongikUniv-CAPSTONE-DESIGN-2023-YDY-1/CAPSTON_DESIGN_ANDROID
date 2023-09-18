@@ -15,4 +15,6 @@ class Repository {
     suspend fun uploadImgToServer(imgUrl: MultipartBody.Part) =
         RetrofitInstance.api.postImage(imgUrl)
 
+    suspend fun getReviewByItemId(itemID: Int, page: Int, accessToken: String) =
+        RetrofitInstance.api.getReviewByItemId(itemID, page, accessToken)
 }

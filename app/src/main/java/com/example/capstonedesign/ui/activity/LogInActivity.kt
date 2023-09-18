@@ -44,6 +44,8 @@ class LogInActivity() : AppCompatActivity() {
                         userPreferences.saveLoginStatus(true)
                     }
                     Toast.makeText(this, "로그인성공", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                     finish()
                 }
                 is SignResource.Failure ->{

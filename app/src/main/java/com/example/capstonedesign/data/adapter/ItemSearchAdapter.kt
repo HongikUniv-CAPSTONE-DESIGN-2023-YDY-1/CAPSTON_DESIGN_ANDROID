@@ -73,6 +73,7 @@ class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>(
         }
         val imgData = item.imgUrl
         val fullImgUrl = "http://nas.robinjoon.xyz:8080/image/$imgData"
+        val itemId = item.id
 
         holder.itemView.apply {
             findViewById<TextView>(R.id.tv_item_promotion).text = formattedPromtion
@@ -85,6 +86,7 @@ class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>(
             setOnClickListener {
                 onItemClickListener?.let { it(item) }
             }
+
         }
 
     }

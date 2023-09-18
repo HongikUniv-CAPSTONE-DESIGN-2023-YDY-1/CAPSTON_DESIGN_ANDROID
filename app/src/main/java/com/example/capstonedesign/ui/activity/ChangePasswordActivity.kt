@@ -1,7 +1,9 @@
 package com.example.capstonedesign.ui.activity
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -16,6 +18,7 @@ import com.example.capstonedesign.data.repository.AuthRepository
 import com.example.capstonedesign.utils.UserPreferences
 import com.example.capstonedesign.databinding.ActivityChangePasswordBinding
 import com.example.capstonedesign.utils.SignResource
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -30,13 +33,14 @@ class ChangePasswordActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         userPreferences = UserPreferences(this)
-        val userEmail = userPreferences.userEmail.asLiveData().value.toString()
         presentPassWorFocusListener()
         newPasswordFocusListener()
 
         binding.btnChangePassword.setOnClickListener {
-            viewModel.changePassword(userEmail, binding.etPresentPassword.text.toString().trim(), binding.etNewPassword.text.toString().trim())
             changePassword()
+
+
+
         }
 
 
@@ -47,12 +51,13 @@ class ChangePasswordActivity : AppCompatActivity(){
             when(it){
                 is SignResource.Success ->{
                     lifecycleScope.launch {
-                        userPreferences.saveEmailAndPassword(userPreferences.userEmail.asLiveData().value.toString(), binding.etNewPassword.text.toString().trim())
+                        userPreferences.saveNewPassword(binding.etNewPassword.text.toString().trim())
                     }
                     Toast.makeText(this, "비밀번호 변경 성공", Toast.LENGTH_SHORT).show()
                     finish()
                 }
                 is SignResource.Failure ->{
+                    Log.d("ChangePasswordActivity", "onCreate: ${it}")
                     Toast.makeText(this, "비밀번호 변경 실패", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -91,18 +96,23 @@ class ChangePasswordActivity : AppCompatActivity(){
     }
 
     private fun resetForm() {
-        var message = "현재 비밀번호:"+ binding.etPresentPassword.text.toString()
-            message += "\n새 비밀번호:"+ binding.etNewPassword.text.toString()
+        val message = "현재 비밀번호:" + binding.etPresentPassword.text.toString() +
+                "\n새 비밀번호:" + binding.etNewPassword.text.toString()
+
         AlertDialog.Builder(this)
             .setTitle("비밀번호 변경")
             .setMessage(message)
-            .setPositiveButton("확인"){ _,_ ->
-                binding.etNewPassword.text = null
-                binding.etPresentPassword.text = null
+            .setPositiveButton("확인") { _, _ ->
+               CoroutineScope(lifecycleScope.coroutineContext).launch {
+                    val email = userPreferences.userEmail.asLiveData().value ?: ""
+                    val password = userPreferences.userPassword.asLiveData().value ?: ""
+                    Log.d("ChangePasswordActivity", "resetForm: $email, $password")
+                    Log.d("ChangePasswordActivity", "resetForm: ${binding.etNewPassword.text.toString().trim()}")
+                    viewModel.changePassword(email, password, binding.etNewPassword.text.toString().trim())
+                }
 
-                binding.presentPasswordTil.helperText = "필요"
-                binding.newPasswordTil.helperText = "필요"
-            }.show()
+            }
+            .show()
     }
 
 
