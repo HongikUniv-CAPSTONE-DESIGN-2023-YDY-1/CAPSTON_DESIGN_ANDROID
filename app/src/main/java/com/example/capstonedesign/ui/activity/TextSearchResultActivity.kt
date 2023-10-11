@@ -57,6 +57,10 @@ class TextSearchResultActivity : AppCompatActivity() {
             tab.text = tableLayout[position]
         }.attach()
 
+        binding.ibGoBack.setOnClickListener {
+            finish()
+        }
+
 
 
 
@@ -83,14 +87,14 @@ class TextSearchResultActivity : AppCompatActivity() {
             else -> R.drawable.black_border
         }
         val fullImgUrl = "http://nas.robinjoon.xyz:8080/image/${item.imgUrl}"
-
+        val price = item.pricePerUnit
 
         binding.tvItemPromotion.text = promotion
         binding.tvConvName.text = item.brand
         binding.tvConvName.setTextColor(brandColor)
         binding.tvConvName.setBackgroundResource(borderColor)
         binding.tvItemName.text = item.name
-        binding.tvItemPrice.text = item.pricePerUnit.toString()
+        binding.tvItemPrice.text = price.toString()+"원"
         Glide.with(this).load(fullImgUrl).into(binding.ivItemImage)
     }
 

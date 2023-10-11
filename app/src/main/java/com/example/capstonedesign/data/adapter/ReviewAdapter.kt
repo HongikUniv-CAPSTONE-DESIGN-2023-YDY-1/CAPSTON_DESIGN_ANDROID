@@ -46,11 +46,20 @@ class ReviewAdapter: RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
         val content =  review.content
         val rating = review.star
         val contentId = review.commentId
+        val promotionId = review.promotionId
 
         holder.itemView.apply {
-            findViewById<TextView>(R.id.tv_content_id).text = "리뷰${contentId.toString()}"
+            findViewById<TextView>(R.id.tv_content_id).text = "리뷰${contentId}"
             findViewById<TextView>(R.id.tv_content).text = content
             findViewById<RatingBar>(R.id.ratingBar).rating = rating.toFloat()
+            findViewById<TextView>(R.id.tv_promotion_id).text = "${promotionId}"
+            setOnClickListener {
+                onItemClickListener?.let { it(review) }
+            }
         }
+    }
+    private var onItemClickListener: ((Content) -> Unit)? = null
+    fun setOnItemClickListener(listener: (Content) -> Unit) {
+        onItemClickListener = listener
     }
 }

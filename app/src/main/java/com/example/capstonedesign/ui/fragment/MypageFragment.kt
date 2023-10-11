@@ -18,6 +18,7 @@ import com.example.capstonedesign.ui.activity.LogInActivity
 import com.example.capstonedesign.utils.UserPreferences
 
 import com.example.capstonedesign.ui.activity.ChangePasswordActivity
+import com.example.capstonedesign.ui.activity.MyReviewActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.launch
 
@@ -92,6 +93,10 @@ class MypageFragment: Fragment(){
         }
         binding.btnChangePassword.setOnClickListener {
             val intent = Intent(activity, ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnGoToReview.setOnClickListener {
+            val intent = Intent(activity, MyReviewActivity::class.java)
             startActivity(intent)
         }
 

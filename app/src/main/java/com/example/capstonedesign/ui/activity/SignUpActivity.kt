@@ -61,6 +61,9 @@ class SignUpActivity : AppCompatActivity(), View.OnFocusChangeListener, View.OnK
 
 
         }
+        binding.ibGoBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun showSignUpSuccessDialog( ){

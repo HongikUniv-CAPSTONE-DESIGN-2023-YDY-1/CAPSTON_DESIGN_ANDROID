@@ -2,6 +2,7 @@ package com.example.capstonedesign.ui.fragment
 
 
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -51,16 +52,24 @@ class ReviewFragment: Fragment(){
         val reviewViewModelProviderFactory = ReviewViewModelProviderFactory(reviewRepository)
         viewModel = ViewModelProvider(this, reviewViewModelProviderFactory).get(ReviewViewModel::class.java)
         userPreferences = UserPreferences(requireContext())
+
+
         userPreferences.accessToken.asLiveData().observe(viewLifecycleOwner) {
             val accessToken = it ?: ""
-            Log.d("토큰", accessToken)
+            if (accessToken.isEmpty()) {
+                Toast.makeText(requireContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
+                binding.tvNotLogin.visibility = View.VISIBLE
+            } else {
+                binding.tvNotLogin.visibility = View.GONE
+            }
             val accessTokenHeader = "Bearer ${accessToken}"
-            Log.d("토큰헤더", accessTokenHeader)
             viewModel.getReviewByItemId(itemId!!.toInt(), 1, accessTokenHeader)
             viewModel.reviews.observe(viewLifecycleOwner, Observer { response ->
                 when(response){
                     is Resource.Success -> {
                         response.data?.let { response ->
+                            Log.d("리뷰", "성공")
+                            Log.d("리뷰", response.data.content.toString())
                             if (response.data.content.isEmpty()){
                                 Toast.makeText(requireContext(), "리뷰가 없습니다.", Toast.LENGTH_SHORT).show()
                                 reviewAdapter.differ.submitList(emptyList())
@@ -80,6 +89,46 @@ class ReviewFragment: Fragment(){
                 }
             })
         }
+
+        binding.btnReviewSubmit.setOnClickListener {
+            userPreferences.accessToken.asLiveData().observe(viewLifecycleOwner){
+                val accessToken = it ?:""
+                val accessTokenHeader = "Bearer ${accessToken}"
+                val promtionId = itemId!!.toInt()
+                val content = binding.etContent.text.toString()
+                val rating = binding.ratingBar.rating.toInt()
+                Log.d("리뷰바디", promtionId.toString())
+                Log.d("리뷰바디", content)
+                Log.d("리뷰바디", rating.toString())
+
+                viewModel.postReview(promtionId, rating , content, accessTokenHeader)
+                Log.d("리뷰명령어", promtionId.toString())
+                Log.d("리뷰명령어", content)
+                Log.d("리뷰명령어", rating.toString())
+                viewModel.reviewPost.observe(viewLifecycleOwner, Observer { response ->
+                    when(response){
+                        is Resource.Success -> {
+                            response.data?.let { response ->
+                                Log.d("리뷰작성", "등록됨")
+                                Toast.makeText(requireContext(), "리뷰가 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                                binding.etContent.setText("")
+                                viewModel.getReviewByItemId(promtionId, 1, accessTokenHeader)
+                            }
+                        }
+                        is  Resource.Error -> {
+                            response.message?.let { message ->
+                                Log.e("리뷰작성", "An error occured: $message")
+                            }
+                        }
+                        is Resource.Loading -> {
+                            Log.d("리뷰작성", "Loading...")
+                        }
+                    }
+                })
+            }
+
+        }
+
     }
     private fun setupRecyclerView() {
         reviewAdapter = ReviewAdapter()

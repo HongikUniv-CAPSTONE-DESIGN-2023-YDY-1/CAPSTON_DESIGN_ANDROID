@@ -45,7 +45,8 @@
                 android:isIndicator="true"
                 android:numStars="5"
                 android:rating="0"
-                android:stepSize="1"/>
+                android:stepSize="1"
+                android:layout_marginLeft="5dp"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -59,6 +60,14 @@
         android:layout_height="wrap_content"
         android:text="정말 맛있음"
         android:textColor="@color/black"
-        android:textSize="15sp"/>
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/tv_promotion_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="id"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="invisible"/>
 
 </LinearLayout>

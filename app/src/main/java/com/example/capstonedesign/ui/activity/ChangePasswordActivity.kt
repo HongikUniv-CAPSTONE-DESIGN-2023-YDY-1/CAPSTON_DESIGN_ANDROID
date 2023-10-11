@@ -42,6 +42,9 @@ class ChangePasswordActivity : AppCompatActivity(){
 
 
         }
+        binding.ibGoBack.setOnClickListener {
+            finish()
+        }
 
 
         val factory = AuthRepository(remoteDataSource.buildApi(IRetrofit::class.java))

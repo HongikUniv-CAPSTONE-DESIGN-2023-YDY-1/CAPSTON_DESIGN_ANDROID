@@ -9,6 +9,12 @@ data class ReviewResponse(
     @SerializedName("message")
     val message: String
 )
+data class UpdateReviewResponse(
+    @SerializedName("data")
+    val data: Content,
+    @SerializedName("message")
+    val message: String
+)
 data class SortX(
     @SerializedName("empty")
     val empty: Boolean,

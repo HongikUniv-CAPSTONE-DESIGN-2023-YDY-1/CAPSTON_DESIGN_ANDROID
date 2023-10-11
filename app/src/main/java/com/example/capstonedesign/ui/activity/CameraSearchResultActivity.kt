@@ -81,6 +81,9 @@ class CameraSearchResultActivity : AppCompatActivity() {
             }
 
         })
+        binding.ibGoBack.setOnClickListener {
+            finish()
+        }
 
     }
     private fun absolutelyPath(contentUri : Uri): String {
@@ -122,6 +125,7 @@ class CameraSearchResultActivity : AppCompatActivity() {
         }
         val imgData = response.imgUrl
         val fullImgUrl = "http://nas.robinjoon.xyz:8080/image/$imgData"
+        val price = response.pricePerUnit
 
         binding.apply {
             tvItemPromotion.text = formatPromotion
@@ -129,8 +133,7 @@ class CameraSearchResultActivity : AppCompatActivity() {
             tvConvName.setTextColor(brandColor)
             tvConvName.setBackgroundResource(borderColor)
             tvItemName.text = name
-            tvItemPrice.text = response.pricePerUnit.toString()
-
+            tvItemPrice.text = price.toString()+"원"
             Glide.with(this@CameraSearchResultActivity).load(fullImgUrl).into(ivItemImage)
         }
     }

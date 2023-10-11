@@ -81,7 +81,7 @@ class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>(
             findViewById<TextView>(R.id.tv_conv_name).setTextColor(brandColor)
             findViewById<TextView>(R.id.tv_conv_name).setBackgroundResource(borderColor)
             findViewById<TextView>(R.id.tv_item_name).text = item.name
-            findViewById<TextView>(R.id.tv_price).text = item.pricePerUnit.toString()
+            findViewById<TextView>(R.id.tv_price).text = item.pricePerUnit.toString()+"원"
             Glide.with(this).load(fullImgUrl).into(findViewById(R.id.iv_item_image))
             setOnClickListener {
                 onItemClickListener?.let { it(item) }
