@@ -25,6 +25,8 @@
         android:theme="@style/Theme.CapstoneDesign"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity android:name=".ui.activity.RecommendItemActivity"
+            android:exported="false"/>
         <activity
             android:name=".ui.activity.MyReviewActivity"
             android:exported="false" />

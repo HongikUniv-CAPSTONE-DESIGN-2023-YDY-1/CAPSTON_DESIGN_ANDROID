@@ -7,7 +7,9 @@ data class ReviewPostResponse(
     @SerializedName("data")
     val data: ReviewPostData,
     @SerializedName("message")
-    val message: String
+    val message: String,
+    @SerializedName("errorMessage")
+    val errorMessage: String?
 )
 data class ReviewPostBody(
     val promotionId: Int,

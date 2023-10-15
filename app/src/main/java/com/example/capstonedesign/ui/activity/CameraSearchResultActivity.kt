@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -15,8 +16,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.adapter.DetailViewPagerAdapter
-import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModel
-import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModelProviderFactory
+import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModel
+import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModelProviderFactory
 import com.example.capstonedesign.data.repository.Repository
 import com.example.capstonedesign.data.response.ItemResponse
 import com.example.capstonedesign.databinding.ActivityCameraSearchResultBinding
@@ -37,17 +38,21 @@ class CameraSearchResultActivity : AppCompatActivity() {
         binding = ActivityCameraSearchResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        showProgressBar()
 
         val imgUri = intent.getStringExtra("imgUri")?.toUri()
         val absolutePath = absolutelyPath(imgUri!!)
 
         val itemRepository = Repository()
         val ItemSearchViewModelProviderFactory = ItemSearchViewModelProviderFactory(itemRepository)
-        viewModel = ViewModelProvider(this, ItemSearchViewModelProviderFactory).get(ItemSearchViewModel::class.java)
+        viewModel = ViewModelProvider(this, ItemSearchViewModelProviderFactory).get(
+            ItemSearchViewModel::class.java)
         viewModel.uploadImgToServer(absolutePath)
         viewModel.CamerItems.observe(this, Observer { response ->
             when(response){
                 is Resource.Success -> {
+                    hideProgressBar()
+                    Log.d("프로그래스바", "프로그래스바 사라짐")
                     response.data?.let { response ->
                         Log.d("사진검색", "response: $response")
                         if (response.response.searchItems.isEmpty()){
@@ -70,13 +75,17 @@ class CameraSearchResultActivity : AppCompatActivity() {
                     }
                 }
                 is Resource.Error -> {
+                    hideProgressBar()
+                    Log.d("프로그래스바", "프로그래스바 사라짐")
                     response.message?.let { message ->
                         Log.e("사진검색", "An error occured: $message")
                         Toast.makeText(this, "서버와 연결 오류. 인터넷상태를 확인해주세요", Toast.LENGTH_SHORT).show()
                     }
                 }
                 is Resource.Loading -> {
+                    showProgressBar()
                     Log.d("사진검색", "Loading...")
+                    Log.d("프로그래스바", "프로그래스바 나타남")
                 }
             }
 
@@ -84,6 +93,16 @@ class CameraSearchResultActivity : AppCompatActivity() {
         binding.ibGoBack.setOnClickListener {
             finish()
         }
+
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.INVISIBLE
+        binding.infoLayout.visibility = View.VISIBLE
+
+    }
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.infoLayout.visibility = View.GONE
 
     }
     private fun absolutelyPath(contentUri : Uri): String {

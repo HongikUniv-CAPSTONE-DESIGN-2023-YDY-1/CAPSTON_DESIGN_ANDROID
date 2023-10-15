@@ -6,6 +6,7 @@ package com.example.capstonedesign.data.api
 import com.example.capstonedesign.data.response.ChangePasswordResponse
 import com.example.capstonedesign.data.response.ItemResponse
 import com.example.capstonedesign.data.response.PasswordChangeBody
+import com.example.capstonedesign.data.response.RecommendListResponse
 import com.example.capstonedesign.data.response.ReviewPostBody
 import com.example.capstonedesign.data.response.ReviewPostResponse
 import com.example.capstonedesign.data.response.ReviewResponse
@@ -85,5 +86,9 @@ interface IRetrofit {
         @Header("Authorization") accessToken: String
     ): Response<UpdateReviewResponse>
 
+    @GET("/member/promotions/recommend")
+    suspend fun getRecommendList(
+        @Header("Authorization") accessToken: String
+    ): Response<RecommendListResponse>
 
 }

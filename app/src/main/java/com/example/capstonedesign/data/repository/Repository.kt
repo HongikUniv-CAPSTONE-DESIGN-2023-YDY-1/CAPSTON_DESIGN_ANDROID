@@ -28,4 +28,7 @@ class Repository {
 
     suspend fun updateReview(updateReviewBody: UpdateReviewBody, accessToken: String) =
         RetrofitInstance.api.updateReview(updateReviewBody, accessToken)
+
+    suspend fun getRecommendList(accessToken: String) =
+        RetrofitInstance.api.getRecommendList(accessToken)
 }

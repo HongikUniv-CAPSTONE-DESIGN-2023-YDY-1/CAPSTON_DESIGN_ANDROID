@@ -2,7 +2,7 @@ package com.example.capstonedesign.data.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.capstonedesign.data.authViewModel.AuthViewModel
+import com.example.capstonedesign.data.viewModel.auth.AuthViewModel
 import com.example.capstonedesign.data.repository.AuthRepository
 import com.example.capstonedesign.data.repository.BaseRepository
 import java.lang.IllegalArgumentException

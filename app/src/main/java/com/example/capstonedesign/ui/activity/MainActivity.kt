@@ -2,18 +2,18 @@ package com.example.capstonedesign.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.capstonedesign.R
 import com.example.capstonedesign.utils.UserPreferences
 import com.example.capstonedesign.databinding.ActivityMainBinding
-import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModel
-import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModelProviderFactory
+import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModel
+import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModelProviderFactory
 import com.example.capstonedesign.data.repository.Repository
+import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
+import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModelProviderFactory
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     lateinit var viewModel: ItemSearchViewModel
+    lateinit var userPreferences: UserPreferences
+    lateinit var reviewViewModel: ReviewViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,23 +39,12 @@ class MainActivity : AppCompatActivity() {
 
         val itemRepository = Repository()
         val viewModelProviderFactory = ItemSearchViewModelProviderFactory(itemRepository)
-        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(ItemSearchViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(ItemSearchViewModel::class.java)
+        userPreferences = UserPreferences(this)
 
-        val userPreferences = UserPreferences(this)
-        /*userPreferences.accessToken.asLiveData().observe(this, Observer {
-           Toast.makeText(this, it ?: "Token is Null", Toast.LENGTH_SHORT).show()
-       })
-        userPreferences.refreshToken.asLiveData().observe(this, Observer {
-           Toast.makeText(this, it ?: "Token is Null", Toast.LENGTH_SHORT).show()
-       })
-        userPreferences.userEmail.asLiveData().observe(this, Observer {
-           Toast.makeText(this, it ?: "Email is Null", Toast.LENGTH_SHORT).show()
-       })
-        userPreferences.userPassword.asLiveData().observe(this, Observer {
-           Toast.makeText(this, it ?: "Password is Null", Toast.LENGTH_SHORT).show()
-       })
-        userPreferences.loginStatus.asLiveData().observe(this, Observer {
-           Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-       })*/
+        val viewModelProviderFactory2 = ReviewViewModelProviderFactory(itemRepository)
+        reviewViewModel =
+            ViewModelProvider(this, viewModelProviderFactory2).get(ReviewViewModel::class.java)
     }
 }

@@ -3,6 +3,7 @@ package com.example.capstonedesign.ui.fragment
 
 
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import retrofit2.Call
@@ -143,6 +145,8 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
                                 ).title("현재 위치")
 
 
+
+
                             )
                             searchPlace(lastKnownLocation!!.latitude,lastKnownLocation!!.longitude , 1000, brand)
 
@@ -199,7 +203,7 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
 
                     result?.documents?.forEach {
                         val latLng = LatLng(it.y.toDouble(), it.x.toDouble())
-                        mMap.addMarker(MarkerOptions().position(latLng).title(it.place_name))
+                        mMap.addMarker(MarkerOptions().position(latLng).title(it.place_name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
                     }
 
 

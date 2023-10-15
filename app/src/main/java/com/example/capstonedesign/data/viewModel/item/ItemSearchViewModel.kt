@@ -1,12 +1,16 @@
-package com.example.capstonedesign.data.itemViewModel
+package com.example.capstonedesign.data.viewModel.item
 
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.capstonedesign.data.repository.Repository
 import com.example.capstonedesign.data.response.ItemResponse
+import com.example.capstonedesign.data.response.RecommendData
+import com.example.capstonedesign.data.response.RecommendListResponse
+
 import com.example.capstonedesign.data.response.ResponseData
 import com.example.capstonedesign.data.response.SearchItem
 import com.example.capstonedesign.utils.Resource
@@ -27,11 +31,12 @@ class ItemSearchViewModel(
 
     val CamerItems: MutableLiveData<Resource<ItemResponse>> = MutableLiveData()
 
+    val RecommendItems: MutableLiveData<Resource<RecommendListResponse>> = MutableLiveData()
+
 
 
     init {
         getAllItems()
-
     }
 
     fun getAllItems() = viewModelScope.launch {
@@ -60,6 +65,20 @@ class ItemSearchViewModel(
         val itemResponse = ItemResponse("success", ResponseData(list2))
         Items.postValue(Resource.Success(itemResponse))
     }
+    fun searchBrand(brand: String) = viewModelScope.launch {
+        Items.postValue(Resource.Loading())
+
+        val response = itemRepository.getAllItems("", "STRONG")
+        val list = response.body()?.response?.searchItems
+        val list3 = mutableListOf<SearchItem>()
+        for (i in list!!) {
+            if (i.brand == brand) {
+                list3.add(i)
+            }
+        }
+        val itemResponse = ItemResponse("success", ResponseData(list3))
+        Items.postValue(Resource.Success(itemResponse))
+    }
 
     fun uploadImgToServer(imgUrl: String) = viewModelScope.launch {
 
@@ -83,6 +102,23 @@ class ItemSearchViewModel(
         }
         return Resource.Error(response.message())
     }
+
+    fun getRecommendList(accessToken: String) = viewModelScope.launch {
+        RecommendItems.postValue(Resource.Loading())
+        val response = itemRepository.getRecommendList(accessToken)
+        RecommendItems.postValue(handleRecommendListResponse(response))
+    }
+
+    private fun handleRecommendListResponse(response: Response<RecommendListResponse>): Resource<RecommendListResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message().toString())
+    }
+
+
 }
 
 

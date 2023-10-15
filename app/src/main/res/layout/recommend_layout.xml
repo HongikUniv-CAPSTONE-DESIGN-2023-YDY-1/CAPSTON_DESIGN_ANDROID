@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    >
+
+    <TextView
+        android:id="@+id/tv_promotion"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="1+1"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:background="@color/systemColor"
+        android:textColor="@color/white"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+
+        android:layout_gravity="center"/>
+    <ImageView
+        android:id="@+id/iv_item_image"
+        android:layout_width="150dp"
+        android:layout_gravity="center"
+        android:layout_height="150dp"
+        android:src="@mipmap/ic_launcher"
+        android:textColor="@color/white"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <TextView
+            android:id="@+id/tv_brand_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CU"
+            android:textColor="@color/cu"
+            android:background="@drawable/cu_border_color"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="편킹"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

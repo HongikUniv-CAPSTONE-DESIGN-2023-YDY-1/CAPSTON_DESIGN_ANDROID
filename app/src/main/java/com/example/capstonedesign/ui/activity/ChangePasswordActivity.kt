@@ -1,6 +1,5 @@
 package com.example.capstonedesign.ui.activity
 
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +11,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.example.capstonedesign.data.api.IRetrofit
 import com.example.capstonedesign.data.api.RemoteDataSource
-import com.example.capstonedesign.data.authViewModel.AuthViewModel
+import com.example.capstonedesign.data.viewModel.auth.AuthViewModel
 import com.example.capstonedesign.data.base.ViewModelFactory
 import com.example.capstonedesign.data.repository.AuthRepository
 import com.example.capstonedesign.utils.UserPreferences

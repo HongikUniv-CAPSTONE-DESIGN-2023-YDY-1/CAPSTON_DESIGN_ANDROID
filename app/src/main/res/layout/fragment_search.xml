@@ -2,18 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/searchFragment"
     android:orientation="vertical"
     tools:context="com.example.capstonedesign.ui.fragment.SearchFragment">
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:weightSum="1"
-        >
+        android:weightSum="1">
 
 
         <EditText
@@ -21,64 +20,124 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.7"
+            android:hint="검색할 상품을 입력해주세요..."
             android:inputType="text"
-            android:maxLines="1"
-            android:hint="검색할 상품을 입력해주세요..."/>
-        <Button
+            android:maxLines="1" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_item_search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="5dp"
             android:layout_weight="0.3"
-            android:text="검색"/>
+            android:background="@color/systemColor"
+            android:text="검색"
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:layout_margin="5dp">
 
-        <Button
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_all"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/systemColor"
             android:text="전체"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/btn_one_plus_one"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_one_plus_one"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/systemColor"
             android:text="1+1"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/btn_two_plus_one"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_all"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintStart_toEndOf="@+id/btn_all" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_two_plus_one"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/systemColor"
             android:text="2+1"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/btn_discount"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_one_plus_one"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <Button
-            android:id="@+id/btn_discount"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="할인"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_two_plus_one"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintStart_toEndOf="@+id/btn_one_plus_one" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/cu"
+            android:text="CU"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/btn_gs25"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_gs25"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/gs25"
+            android:text="GS25"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/btn_emart24"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_cu" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_emart24"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/emart24"
+            android:text="EMART24"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/btn_seven_eleven"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_gs25" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_seven_eleven"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/seven"
+            android:text="seven"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_emart24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -88,7 +147,18 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_item_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/baseline_arrow_upward_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -102,6 +172,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.example.capstonedesign.ui.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,11 +7,10 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.capstonedesign.data.adapter.ReviewAdapter
 import com.example.capstonedesign.data.repository.Repository
-import com.example.capstonedesign.data.reviewViewModel.ReviewViewModel
-import com.example.capstonedesign.data.reviewViewModel.ReviewViewModelProviderFactory
+
+import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
+import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModelProviderFactory
 import com.example.capstonedesign.databinding.ActivityUpdateReviewBinding
 import com.example.capstonedesign.utils.Resource
 import com.example.capstonedesign.utils.UserPreferences

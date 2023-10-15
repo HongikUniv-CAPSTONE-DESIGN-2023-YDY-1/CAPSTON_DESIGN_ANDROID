@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstonedesign.ui.activity.MainActivity
 import com.example.capstonedesign.data.adapter.ItemSearchAdapter
 import com.example.capstonedesign.databinding.FragmentSearchBinding
-import com.example.capstonedesign.data.itemViewModel.ItemSearchViewModel
-import com.example.capstonedesign.ui.activity.CameraSearchResultActivity
+import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModel
 import com.example.capstonedesign.ui.activity.TextSearchResultActivity
 import com.example.capstonedesign.utils.Resource
 
@@ -71,7 +70,7 @@ class SearchFragment: Fragment(){
 
         })
         binding.btnItemSearch.setOnClickListener {
-            val searchWord = binding.etItemSearch.text.toString()
+            val searchWord = binding.etItemSearch.text.toString().trim()
 
             if (searchWord.isEmpty()) {
                 binding.etItemSearch.error = "검색어를 입력해주세요."
@@ -96,6 +95,19 @@ class SearchFragment: Fragment(){
             intent.putExtra("itemInfo", it)
             startActivity(intent)
         }
+        binding.btnCu.setOnClickListener {
+            viewModel.searchBrand("CU")
+        }
+        binding.btnSevenEleven.setOnClickListener {
+            viewModel.searchBrand("SEVENELEVEN")
+        }
+        binding.btnGs25.setOnClickListener {
+            viewModel.searchBrand("GS25")
+        }
+        binding.btnEmart24.setOnClickListener {
+            viewModel.searchBrand("EMART24")
+        }
+
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.capstonedesign.data.itemViewModel
+package com.example.capstonedesign.data.viewModel.item
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

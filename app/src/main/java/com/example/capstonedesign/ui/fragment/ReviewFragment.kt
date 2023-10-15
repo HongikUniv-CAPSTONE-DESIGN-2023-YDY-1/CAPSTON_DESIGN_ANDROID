@@ -2,7 +2,6 @@ package com.example.capstonedesign.ui.fragment
 
 
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,12 +13,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.capstonedesign.data.adapter.ItemSearchAdapter
 import com.example.capstonedesign.data.adapter.ReviewAdapter
 import com.example.capstonedesign.data.repository.Repository
-import com.example.capstonedesign.data.reviewViewModel.ReviewViewModel
-import com.example.capstonedesign.data.reviewViewModel.ReviewViewModelProviderFactory
-import com.example.capstonedesign.databinding.FragmentMapsBinding
+
+import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
+import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModelProviderFactory
 import com.example.capstonedesign.databinding.FragmentReviewBinding
 import com.example.capstonedesign.utils.Resource
 import com.example.capstonedesign.utils.UserPreferences
@@ -56,6 +54,7 @@ class ReviewFragment: Fragment(){
 
         userPreferences.accessToken.asLiveData().observe(viewLifecycleOwner) {
             val accessToken = it ?: ""
+            Log.d("accessToken", accessToken)
             if (accessToken.isEmpty()) {
                 Toast.makeText(requireContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
                 binding.tvNotLogin.visibility = View.VISIBLE
@@ -63,6 +62,7 @@ class ReviewFragment: Fragment(){
                 binding.tvNotLogin.visibility = View.GONE
             }
             val accessTokenHeader = "Bearer ${accessToken}"
+            //val accessTokenHeader = "Bearer eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJhY2Nlc3MiLCJ1c2VySUQiOjMsImV4cCI6MTcwMzMwNjg3MSwiaWF0IjoxNjk3MzA2ODcxLCJpc3MiOiJ0ZXN0In0.yIdX0F2ARracaiLMu1wCJGEAJGWeK-FgFOPeRhk4Wwc"
             viewModel.getReviewByItemId(itemId!!.toInt(), 1, accessTokenHeader)
             viewModel.reviews.observe(viewLifecycleOwner, Observer { response ->
                 when(response){
@@ -97,19 +97,16 @@ class ReviewFragment: Fragment(){
                 val promtionId = itemId!!.toInt()
                 val content = binding.etContent.text.toString()
                 val rating = binding.ratingBar.rating.toInt()
-                Log.d("리뷰바디", promtionId.toString())
-                Log.d("리뷰바디", content)
-                Log.d("리뷰바디", rating.toString())
 
                 viewModel.postReview(promtionId, rating , content, accessTokenHeader)
-                Log.d("리뷰명령어", promtionId.toString())
-                Log.d("리뷰명령어", content)
-                Log.d("리뷰명령어", rating.toString())
+                Log.d("리뷰작성", "등록")
+                Log.d("accessToken", accessTokenHeader)
                 viewModel.reviewPost.observe(viewLifecycleOwner, Observer { response ->
                     when(response){
                         is Resource.Success -> {
                             response.data?.let { response ->
                                 Log.d("리뷰작성", "등록됨")
+                                Log.d("리뷰작성", response.data.toString())
                                 Toast.makeText(requireContext(), "리뷰가 등록되었습니다.", Toast.LENGTH_SHORT).show()
                                 binding.etContent.setText("")
                                 viewModel.getReviewByItemId(promtionId, 1, accessTokenHeader)
@@ -119,10 +116,13 @@ class ReviewFragment: Fragment(){
                             response.message?.let { message ->
                                 Log.e("리뷰작성", "An error occured: $message")
                             }
+
+
                         }
                         is Resource.Loading -> {
                             Log.d("리뷰작성", "Loading...")
                         }
+
                     }
                 })
             }

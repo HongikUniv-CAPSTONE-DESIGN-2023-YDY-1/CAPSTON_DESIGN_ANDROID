@@ -1,4 +1,4 @@
-package com.example.capstonedesign.data.authViewModel
+package com.example.capstonedesign.data.viewModel.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

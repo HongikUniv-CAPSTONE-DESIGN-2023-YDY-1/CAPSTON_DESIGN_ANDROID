@@ -7,16 +7,14 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.adapter.DetailViewPagerAdapter
-import com.example.capstonedesign.data.response.SearchItem
-
-import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
-import com.example.capstonedesign.databinding.ActivityTextSearchResultBinding
+import com.example.capstonedesign.data.response.RecommendData
+import com.example.capstonedesign.databinding.ActivityRecommendItemBinding
 import com.example.capstonedesign.utils.UserPreferences
 import com.google.android.material.tabs.TabLayoutMediator
 
-class TextSearchResultActivity : AppCompatActivity() {
-    lateinit var binding: ActivityTextSearchResultBinding
-    private lateinit var viewModel: ReviewViewModel
+class RecommendItemActivity : AppCompatActivity() {
+    lateinit var binding: ActivityRecommendItemBinding
+
     private lateinit var userPreferences: UserPreferences
 
     private val tableLayout = arrayOf(
@@ -25,21 +23,21 @@ class TextSearchResultActivity : AppCompatActivity() {
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTextSearchResultBinding.inflate(layoutInflater)
+        binding = ActivityRecommendItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
         val itemInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("itemInfo", SearchItem::class.java)
+            intent.getParcelableExtra("itemInfo", RecommendData::class.java)
         } else {
-            intent.getParcelableExtra<SearchItem>("itemInfo")
+            intent.getParcelableExtra<RecommendData>("itemInfo")
         }
         refactoringInfo(itemInfo!!)
 
         userPreferences = UserPreferences(this)
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
-        val adapter = DetailViewPagerAdapter(supportFragmentManager, lifecycle, itemInfo.brand, itemInfo.id.toString())
+        val adapter = DetailViewPagerAdapter(supportFragmentManager, lifecycle,itemInfo.brand, itemInfo.id.toString())
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tableLayout[position]
@@ -54,7 +52,7 @@ class TextSearchResultActivity : AppCompatActivity() {
 
 
     }
-    private fun refactoringInfo(item: SearchItem) {
+    private fun refactoringInfo(item: RecommendData) {
         val promotion = when(item.promotion){
             "ONE_PLUS_ONE" -> "1 + 1"
             "TWO_PLUS_ONE" -> "2 + 1"
