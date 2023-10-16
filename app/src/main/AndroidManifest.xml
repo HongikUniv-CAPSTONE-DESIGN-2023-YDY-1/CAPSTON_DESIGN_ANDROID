@@ -38,6 +38,8 @@
         <activity
             android:name=".ui.activity.CameraSearchResultActivity"
             android:exported="false" />
+        <activity android:name=".ui.activity.CameraSearchListActivity"
+            android:exported="false"/>
         <activity
             android:name=".ui.activity.ChangePasswordActivity"
             android:exported="false" />

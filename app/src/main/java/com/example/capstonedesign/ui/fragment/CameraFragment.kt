@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.capstonedesign.R
 import com.example.capstonedesign.databinding.FragmentCameraBinding
+import com.example.capstonedesign.ui.activity.CameraSearchListActivity
 import com.example.capstonedesign.ui.activity.CameraSearchResultActivity
 import com.example.capstonedesign.utils.Constants.Companion.TAG
 import java.io.File
@@ -74,7 +75,7 @@ class CameraFragment: Fragment(){
         }
         binding.capturePreview.setOnClickListener {
             if (::savedUri.isInitialized) {
-                val intent = Intent(activity, CameraSearchResultActivity::class.java)
+                val intent = Intent(activity, CameraSearchListActivity::class.java)
                 intent.putExtra("imgUri", savedUri.toString())
                 Log.d("imgUri", savedUri.toString())
                 startActivity(intent)

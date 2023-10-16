@@ -3,17 +3,16 @@ package com.example.capstonedesign.ui.fragment
 
 
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.api.KakaoClient
 import com.example.capstonedesign.data.api.KakaoInterface
@@ -24,7 +23,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import retrofit2.Call
@@ -44,19 +42,18 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
     private var locationPermissionGranted = false
     private var currentLatitude: Double = 0.0
     private var currentLongitude: Double = 0.0
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                locationPermissionGranted = true
-                updateLocationUI()
 
-            } else {
-                locationPermissionGranted = false
-                updateLocationUI()
-                Toast.makeText(requireContext(), "위치 권한이 없습니다.", Toast.LENGTH_SHORT).show()
-            }
+    private val REQUIRED_PERMISSIONS = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if(allPermissionsGrandted() == false){
+            ActivityCompat.requestPermissions(
+                requireActivity(), REQUIRED_PERMISSIONS, 101
+
+            )
+
         }
-
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,27 +67,21 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-
+        refreshFragment(this, requireFragmentManager())
+        if(!allPermissionsGrandted()){
+            binding.permissionText.visibility = View.VISIBLE
+            binding.MapsFragment.visibility= View.GONE
         } else {
-            getLocationPermission()
+            binding.permissionText.visibility = View.GONE
+            binding.MapsFragment.visibility= View.VISIBLE
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+            val mapFragment = childFragmentManager.findFragmentById(R.id.map) as com.google.android.gms.maps.SupportMapFragment?
+            mapFragment?.getMapAsync(this)
+
         }
-
-
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as com.google.android.gms.maps.SupportMapFragment?
-        mapFragment?.getMapAsync(this)
-
-
-
-
     }
+
+
 
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -145,8 +136,6 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
                                 ).title("현재 위치")
 
 
-
-
                             )
                             searchPlace(lastKnownLocation!!.latitude,lastKnownLocation!!.longitude , 1000, brand)
 
@@ -184,8 +173,14 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
         ) {
             locationPermissionGranted = true
         } else {
-            requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
+            locationPermissionGranted = false
+
         }
+    }
+    private fun allPermissionsGrandted() = REQUIRED_PERMISSIONS.all{
+        ContextCompat.checkSelfPermission(
+            requireContext(), it
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun searchPlace(x: Double, y: Double, radius: Int, query: String){
@@ -203,7 +198,10 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
 
                     result?.documents?.forEach {
                         val latLng = LatLng(it.y.toDouble(), it.x.toDouble())
-                        mMap.addMarker(MarkerOptions().position(latLng).title(it.place_name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
+                        mMap.addMarker(MarkerOptions().position(latLng).title(it.place_name).icon(
+                            com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker(
+                                com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_AZURE
+                            )))
                     }
 
 
@@ -216,6 +214,10 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
                 Log.d("api", "연결 실패 : $t")
             }
         })
+    }
+    fun refreshFragment(fragment: Fragment, fragmentManager: FragmentManager){
+        val ft = fragmentManager.beginTransaction()
+        ft.detach(this).attach(this).commit()
     }
 
 

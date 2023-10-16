@@ -4,19 +4,23 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import com.bumptech.glide.Glide
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.adapter.DetailViewPagerAdapter
+import com.example.capstonedesign.data.repository.Repository
 import com.example.capstonedesign.data.response.SearchItem
 
 import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
+import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModelProviderFactory
 import com.example.capstonedesign.databinding.ActivityTextSearchResultBinding
 import com.example.capstonedesign.utils.UserPreferences
 import com.google.android.material.tabs.TabLayoutMediator
 
 class TextSearchResultActivity : AppCompatActivity() {
     lateinit var binding: ActivityTextSearchResultBinding
-    private lateinit var viewModel: ReviewViewModel
+    private lateinit var reviewViewModel: ReviewViewModel
     private lateinit var userPreferences: UserPreferences
 
     private val tableLayout = arrayOf(
@@ -28,6 +32,10 @@ class TextSearchResultActivity : AppCompatActivity() {
         binding = ActivityTextSearchResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val reviewRepository = Repository()
+        val reviewViewModelProviderFactory = ReviewViewModelProviderFactory(reviewRepository)
+        reviewViewModel = ViewModelProvider(this, reviewViewModelProviderFactory).get(ReviewViewModel::class.java)
+
 
         val itemInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("itemInfo", SearchItem::class.java)
@@ -37,6 +45,16 @@ class TextSearchResultActivity : AppCompatActivity() {
         refactoringInfo(itemInfo!!)
 
         userPreferences = UserPreferences(this)
+        userPreferences.accessToken.asLiveData().observe(this){
+            val accessToken = it ?: ""
+            if (accessToken.isEmpty()) {
+                return@observe
+            } else {
+                val accessTokenHeader = "Bearer ${accessToken}"
+                reviewViewModel.getReviewByItemId(itemInfo.id, 1, accessTokenHeader)
+
+            }
+        }
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
         val adapter = DetailViewPagerAdapter(supportFragmentManager, lifecycle, itemInfo.brand, itemInfo.id.toString())

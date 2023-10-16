@@ -62,7 +62,6 @@ class ReviewFragment: Fragment(){
                 binding.tvNotLogin.visibility = View.GONE
             }
             val accessTokenHeader = "Bearer ${accessToken}"
-            //val accessTokenHeader = "Bearer eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJhY2Nlc3MiLCJ1c2VySUQiOjMsImV4cCI6MTcwMzMwNjg3MSwiaWF0IjoxNjk3MzA2ODcxLCJpc3MiOiJ0ZXN0In0.yIdX0F2ARracaiLMu1wCJGEAJGWeK-FgFOPeRhk4Wwc"
             viewModel.getReviewByItemId(itemId!!.toInt(), 1, accessTokenHeader)
             viewModel.reviews.observe(viewLifecycleOwner, Observer { response ->
                 when(response){
