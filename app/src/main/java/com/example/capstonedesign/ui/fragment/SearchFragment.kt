@@ -110,8 +110,6 @@ class SearchFragment: Fragment(){
         binding.fab.setOnClickListener {
             binding.rvItemList.smoothScrollToPosition(0)
         }
-
-
     }
 
     private fun hideProgressBar() {
