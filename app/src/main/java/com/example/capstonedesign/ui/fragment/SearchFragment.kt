@@ -107,6 +107,9 @@ class SearchFragment: Fragment(){
         binding.btnEmart24.setOnClickListener {
             viewModel.searchBrand("EMART24")
         }
+        binding.fab.setOnClickListener {
+            binding.rvItemList.smoothScrollToPosition(0)
+        }
 
 
     }
