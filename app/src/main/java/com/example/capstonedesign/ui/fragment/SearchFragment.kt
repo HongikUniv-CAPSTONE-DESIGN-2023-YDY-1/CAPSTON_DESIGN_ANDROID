@@ -18,7 +18,7 @@ import com.example.capstonedesign.ui.activity.TextSearchResultActivity
 import com.example.capstonedesign.utils.Resource
 
 
-class SearchFragment: Fragment(){
+class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
     private lateinit var itemadapter: ItemSearchAdapter
@@ -33,7 +33,6 @@ class SearchFragment: Fragment(){
         return binding.root
 
 
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,14 +41,15 @@ class SearchFragment: Fragment(){
         setupRecyclerView()
 
         viewModel.Items.observe(viewLifecycleOwner, Observer { response ->
-            when(response){
+            when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    response.data?.let {response ->
+                    response.data?.let { response ->
                         Log.d("검색프레그먼트", "response: $response")
                         if (response.response.searchItems.isEmpty()) {
 
-                            Toast.makeText(requireContext(), "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "검색 결과가 없습니다.", Toast.LENGTH_SHORT)
+                                .show()
 
                             itemadapter.differ.submitList(emptyList())
                         } else {
@@ -57,12 +57,14 @@ class SearchFragment: Fragment(){
                         }
                     }
                 }
+
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
                         Log.e("검색프레그먼트", "An error occured: $message")
                     }
                 }
+
                 is Resource.Loading -> {
                     showProgressBar()
                 }
@@ -115,9 +117,11 @@ class SearchFragment: Fragment(){
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.INVISIBLE
     }
+
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
     }
+
     private fun setupRecyclerView() {
         itemadapter = ItemSearchAdapter()
         binding.rvItemList.layoutManager = LinearLayoutManager(activity)
