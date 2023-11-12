@@ -13,8 +13,6 @@ import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModelProvide
 import com.example.capstonedesign.data.repository.Repository
 import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
 import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModelProviderFactory
-import com.google.android.material.bottomsheet.BottomSheetDialog
-
 
 class MainActivity : AppCompatActivity() {
 

@@ -3,40 +3,26 @@ package com.example.capstonedesign.ui.fragment
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.example.capstonedesign.R
-import com.example.capstonedesign.data.api.IRetrofit
-import com.example.capstonedesign.data.base.ViewModelFactory
-import com.example.capstonedesign.data.repository.AuthRepository
-import com.example.capstonedesign.data.repository.Repository
-import com.example.capstonedesign.data.viewModel.auth.AuthViewModel
-import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModel
-import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModelProviderFactory
-import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
-import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModelProviderFactory
 import com.example.capstonedesign.databinding.FragmentMypageBinding
-
 import com.example.capstonedesign.ui.activity.LogInActivity
 import com.example.capstonedesign.utils.UserPreferences
-
 import com.example.capstonedesign.ui.activity.ChangePasswordActivity
 import com.example.capstonedesign.ui.activity.MyReviewActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
-class MypageFragment: Fragment(){
+class MypageFragment : Fragment() {
 
     private lateinit var binding: FragmentMypageBinding
     private lateinit var userPreferences: UserPreferences
@@ -51,6 +37,7 @@ class MypageFragment: Fragment(){
 
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userPreferences = UserPreferences(requireContext())
@@ -70,10 +57,10 @@ class MypageFragment: Fragment(){
                 binding.btnProfile.visibility = View.GONE
                 binding.btnLogin.visibility = View.VISIBLE
                 binding.btnLogout.visibility = View.GONE
-                binding.btnChangePassword.setOnClickListener{
+                binding.btnChangePassword.setOnClickListener {
                     Toast.makeText(activity, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
                 }
-                binding.btnGoToReview.setOnClickListener{
+                binding.btnGoToReview.setOnClickListener {
                     Toast.makeText(activity, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -125,18 +112,15 @@ class MypageFragment: Fragment(){
         }
 
     }
-private fun restartApp(context: Context){
-    val packageManager = context.packageManager
-    val intent = packageManager.getLaunchIntentForPackage(context.packageName)
-    val componentName = intent!!.component
-    val mainIntent = Intent.makeRestartActivityTask(componentName)
-    context.startActivity(mainIntent)
-    exitProcess(0)
-}
-    
-    
 
-
+    private fun restartApp(context: Context) {
+        val packageManager = context.packageManager
+        val intent = packageManager.getLaunchIntentForPackage(context.packageName)
+        val componentName = intent!!.component
+        val mainIntent = Intent.makeRestartActivityTask(componentName)
+        context.startActivity(mainIntent)
+        exitProcess(0)
+    }
 
 
 }

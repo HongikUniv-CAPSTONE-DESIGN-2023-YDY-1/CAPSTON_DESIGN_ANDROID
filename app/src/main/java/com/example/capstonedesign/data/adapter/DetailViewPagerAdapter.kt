@@ -32,6 +32,7 @@ class DetailViewPagerAdapter(
                     }
                 }
             }
+
             1 -> {
                 ReviewFragment().apply {
                     arguments = Bundle().apply {
@@ -39,6 +40,7 @@ class DetailViewPagerAdapter(
                     }
                 }
             }
+
             else -> throw IllegalArgumentException("Invalid position")
         }
     }

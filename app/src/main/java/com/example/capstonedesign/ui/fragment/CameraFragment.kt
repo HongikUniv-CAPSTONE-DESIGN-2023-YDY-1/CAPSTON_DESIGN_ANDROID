@@ -1,4 +1,3 @@
-
 package com.example.capstonedesign.ui.fragment
 
 import android.content.Intent
@@ -22,7 +21,6 @@ import androidx.fragment.app.Fragment
 import com.example.capstonedesign.R
 import com.example.capstonedesign.databinding.FragmentCameraBinding
 import com.example.capstonedesign.ui.activity.CameraSearchListActivity
-import com.example.capstonedesign.ui.activity.CameraSearchResultActivity
 import com.example.capstonedesign.utils.Constants.Companion.TAG
 import java.io.File
 import java.util.Locale
@@ -30,8 +28,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-
-class CameraFragment: Fragment(){
+class CameraFragment : Fragment() {
 
     private lateinit var binding: FragmentCameraBinding
     private var imageCapture: ImageCapture? = null
@@ -51,6 +48,7 @@ class CameraFragment: Fragment(){
         }
         super.onCreate(savedInstanceState)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -98,7 +96,9 @@ class CameraFragment: Fragment(){
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
         imageCapture.takePicture(
-            outputOptions, ContextCompat.getMainExecutor(requireContext()), object : ImageCapture.OnImageSavedCallback {
+            outputOptions,
+            ContextCompat.getMainExecutor(requireContext()),
+            object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
@@ -116,7 +116,7 @@ class CameraFragment: Fragment(){
             })
     }
 
-    private fun startCamera(){
+    private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         val cameraProvider = cameraProviderFuture.get()
         val preview = Preview.Builder().build()
@@ -153,10 +153,7 @@ class CameraFragment: Fragment(){
     }
 
 
-
-
-
-    private fun allPermissionsGrandted() = REQUIRED_PERMISSIONS.all{
+    private fun allPermissionsGrandted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
             requireContext(), it
         ) == PackageManager.PERMISSION_GRANTED

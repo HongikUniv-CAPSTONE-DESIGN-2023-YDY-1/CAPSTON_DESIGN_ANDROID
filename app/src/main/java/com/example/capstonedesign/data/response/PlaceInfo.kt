@@ -1,7 +1,6 @@
 package com.example.capstonedesign.data.response
 
 
-
 import com.google.gson.annotations.SerializedName
 
 data class PlaceInfo(
@@ -10,6 +9,7 @@ data class PlaceInfo(
     @SerializedName("meta")
     val meta: Meta
 )
+
 data class SameName(
     @SerializedName("keyword")
     val keyword: String,
@@ -18,6 +18,7 @@ data class SameName(
     @SerializedName("selected_region")
     val selectedRegion: String
 )
+
 data class Meta(
     @SerializedName("is_end")
     val isEnd: Boolean,
@@ -28,6 +29,7 @@ data class Meta(
     @SerializedName("total_count")
     val totalCount: Int
 )
+
 data class Place(
     val address_name: String,
     val category_group_code: String,

@@ -1,13 +1,12 @@
 package com.example.capstonedesign.data.repository
 
 import com.example.capstonedesign.data.api.IRetrofit
-import com.example.capstonedesign.data.response.ChangePasswordResponse
 import com.example.capstonedesign.data.response.PasswordChangeBody
 import com.example.capstonedesign.data.response.User
 
 class AuthRepository(
     private val api: IRetrofit
-): BaseRepository() {
+) : BaseRepository() {
 
     suspend fun login(
         email: String,
@@ -17,6 +16,7 @@ class AuthRepository(
         api.login(user)
 
     }
+
     suspend fun ChangePassword(
         email: String,
         password: String,

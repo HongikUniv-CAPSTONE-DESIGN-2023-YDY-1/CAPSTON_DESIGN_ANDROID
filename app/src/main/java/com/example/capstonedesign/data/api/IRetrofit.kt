@@ -1,8 +1,6 @@
 package com.example.capstonedesign.data.api
 
 
-
-
 import com.example.capstonedesign.data.response.ChangePasswordResponse
 import com.example.capstonedesign.data.response.ItemResponse
 import com.example.capstonedesign.data.response.PasswordChangeBody
@@ -32,7 +30,7 @@ interface IRetrofit {
     @GET("/konbini/items")
     suspend fun searchItems(
         @Query("name") name: String,
-        @Query("strength") strength: String="STRONG"
+        @Query("strength") strength: String = "STRONG"
 
     ): Response<ItemResponse>
 
@@ -41,7 +39,6 @@ interface IRetrofit {
     suspend fun postImage(
         @Part image: MultipartBody.Part
     ): Response<ItemResponse>
-
 
     @POST("/member")
     suspend fun signUp(
@@ -56,7 +53,7 @@ interface IRetrofit {
     @PATCH("/member/password")
     suspend fun changePassWord(
         @Body updateRequest: PasswordChangeBody
-    ):ChangePasswordResponse
+    ): ChangePasswordResponse
 
     @GET("/comment/list/{itemID}/{page}")
     suspend fun getReviewByItemId(
@@ -71,8 +68,6 @@ interface IRetrofit {
         @Path("page") page: Int,
         @Header("Authorization") accessToken: String,
     ): Response<ReviewResponse>
-
-
 
     @POST("/comment")
     suspend fun postReview(

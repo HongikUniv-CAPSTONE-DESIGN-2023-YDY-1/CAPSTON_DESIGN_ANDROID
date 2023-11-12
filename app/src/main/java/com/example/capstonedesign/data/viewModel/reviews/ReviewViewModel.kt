@@ -35,33 +35,29 @@ class ReviewViewModel(
         reviewByUserId.postValue(handleAllItemsResponse(response))
     }
 
-    /*fun postReview(itemID: Int, rating: Int, content: String, accessToken: String) = viewModelScope.launch {
+    fun postReview(itemID: Int, rating: Int, content: String, accessToken: String) =
+        viewModelScope.launch {
             val reviewPostBody = ReviewPostBody(itemID, rating, content)
-            reviewPost.postValue(Resource.Loading())
-            val response = reviewRepository.reviewPost(reviewPostBody, accessToken)
-            reviewPost.postValue(handleReviewResponse(response))
-    }*/
-    fun postReview(itemID: Int, rating: Int, content: String, accessToken: String) = viewModelScope.launch {
-        val reviewPostBody = ReviewPostBody(itemID, rating, content)
-        reviewPost.value = Resource.Loading()
+            reviewPost.value = Resource.Loading()
 
-        try {
-            val response = reviewRepository.reviewPost(reviewPostBody, accessToken)
-            if (response.isSuccessful) {
-                response.body()?.let { resultResponse ->
-                    reviewPost.value = Resource.Success(resultResponse)
+            try {
+                val response = reviewRepository.reviewPost(reviewPostBody, accessToken)
+                if (response.isSuccessful) {
+                    response.body()?.let { resultResponse ->
+                        reviewPost.value = Resource.Success(resultResponse)
+                    }
+                } else {
+                    val errorResponse = response.errorBody()?.string()
+                    val errorMessage = "Error Message from Server: $errorResponse"
+                    reviewPost.value = Resource.Error(errorMessage)
                 }
-            } else {
-                val errorResponse = response.errorBody()?.string()
-                val errorMessage = "Error Message from Server: $errorResponse"
+            } catch (e: Exception) {
+                // Retrofit에서 발생하는 예외를 처리
+                val errorMessage = "Network Request Failed: ${e.message}"
                 reviewPost.value = Resource.Error(errorMessage)
             }
-        } catch (e: Exception) {
-            // Retrofit에서 발생하는 예외를 처리
-            val errorMessage = "Network Request Failed: ${e.message}"
-            reviewPost.value = Resource.Error(errorMessage)
         }
-    }
+
     fun updateReview(
         commentId: Int,
         itemID: Int,

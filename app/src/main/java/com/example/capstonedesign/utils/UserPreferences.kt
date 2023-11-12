@@ -16,7 +16,8 @@ class UserPreferences(
     context: Context
 ) {
     private val applicationContext = context.applicationContext
-    private val dataStore : DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>
+
     init {
         dataStore = applicationContext.createDataStore(
             name = "my_data_store"
@@ -44,35 +45,40 @@ class UserPreferences(
         get() = dataStore.data.map { preferences ->
             preferences[LOGIN_STATUS] ?: false
         }
-    suspend fun saveToken(accessToken: String, refreshToken: String){
+
+    suspend fun saveToken(accessToken: String, refreshToken: String) {
         dataStore.edit { preferences ->
             preferences[ACCESS_TOKEN] = accessToken
             preferences[REFRESH_TOKEN] = refreshToken
         }
     }
-    suspend fun saveEmailAndPassword(email: String, password: String){
+
+    suspend fun saveEmailAndPassword(email: String, password: String) {
         dataStore.edit { preferences ->
             preferences[USER_EMAIL] = email
             preferences[USER_PASSWORD] = password
         }
     }
-    suspend fun saveLoginStatus(status: Boolean){
+
+    suspend fun saveLoginStatus(status: Boolean) {
         dataStore.edit { preferences ->
             preferences[LOGIN_STATUS] = status
         }
     }
-    suspend fun saveNewPassword(password: String){
+
+    suspend fun saveNewPassword(password: String) {
         dataStore.edit { preferences ->
             preferences[USER_PASSWORD] = password
         }
     }
 
-    suspend fun clear(){
+    suspend fun clear() {
         dataStore.edit { preferences ->
             preferences.clear()
         }
     }
-    companion object{
+
+    companion object {
         private val ACCESS_TOKEN = stringPreferencesKey("access_token")
         private val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
         private val USER_EMAIL = stringPreferencesKey("user_email")

@@ -10,12 +10,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.response.Content
-import com.example.capstonedesign.data.response.SearchItem
 
-class ReviewAdapter: RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
-    inner class ReviewViewHolder(reviewView: View): RecyclerView.ViewHolder(reviewView)
+class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
+    inner class ReviewViewHolder(reviewView: View) : RecyclerView.ViewHolder(reviewView)
 
-    private val differCallback = object : DiffUtil.ItemCallback<Content>(){
+    private val differCallback = object : DiffUtil.ItemCallback<Content>() {
         override fun areItemsTheSame(oldItem: Content, newItem: Content): Boolean {
             return oldItem.commentId == newItem.commentId
         }
@@ -28,13 +27,13 @@ class ReviewAdapter: RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
     val differ = AsyncListDiffer(this, differCallback)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
-       return ReviewViewHolder(
-           LayoutInflater.from(parent.context).inflate(
-               R.layout.review_layout,
-               parent,
-               false
-           )
-       )
+        return ReviewViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.review_layout,
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int {
@@ -43,7 +42,7 @@ class ReviewAdapter: RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
         val review = differ.currentList[position]
-        val content =  review.content
+        val content = review.content
         val rating = review.star
         val contentId = review.commentId
         val promotionId = review.promotionId
@@ -58,6 +57,7 @@ class ReviewAdapter: RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
             }
         }
     }
+
     private var onItemClickListener: ((Content) -> Unit)? = null
     fun setOnItemClickListener(listener: (Content) -> Unit) {
         onItemClickListener = listener

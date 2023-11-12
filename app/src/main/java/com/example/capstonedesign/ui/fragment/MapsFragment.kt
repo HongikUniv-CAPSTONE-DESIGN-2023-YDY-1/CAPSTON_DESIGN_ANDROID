@@ -1,7 +1,6 @@
 package com.example.capstonedesign.ui.fragment
 
 
-
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -30,8 +29,7 @@ import retrofit2.Response
 import retrofit2.Callback
 
 
-
-class MapsFragment(): Fragment(), OnMapReadyCallback{
+class MapsFragment() : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentMapsBinding
 
@@ -46,7 +44,7 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
     private val REQUIRED_PERMISSIONS = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(allPermissionsGrandted() == false){
+        if (allPermissionsGrandted() == false) {
             ActivityCompat.requestPermissions(
                 requireActivity(), REQUIRED_PERMISSIONS, 101
 
@@ -68,20 +66,20 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshFragment(this, requireFragmentManager())
-        if(!allPermissionsGrandted()){
+        if (!allPermissionsGrandted()) {
             binding.permissionText.visibility = View.VISIBLE
-            binding.MapsFragment.visibility= View.GONE
+            binding.MapsFragment.visibility = View.GONE
         } else {
             binding.permissionText.visibility = View.GONE
-            binding.MapsFragment.visibility= View.VISIBLE
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-            val mapFragment = childFragmentManager.findFragmentById(R.id.map) as com.google.android.gms.maps.SupportMapFragment?
+            binding.MapsFragment.visibility = View.VISIBLE
+            fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(requireActivity())
+            val mapFragment =
+                childFragmentManager.findFragmentById(R.id.map) as com.google.android.gms.maps.SupportMapFragment?
             mapFragment?.getMapAsync(this)
 
         }
     }
-
-
 
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -94,6 +92,7 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
 
 
     }
+
     @SuppressWarnings("MissingPermission")
     private fun updateLocationUI() {
 
@@ -111,10 +110,11 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
             Log.e("Exception: %s", e.message.toString())
         }
     }
+
     @SuppressWarnings("MissingPermission")
     private fun getDeviceLocation(brand: String) {
         try {
-            if (locationPermissionGranted){
+            if (locationPermissionGranted) {
                 val locationResult = fusedLocationProviderClient.lastLocation
                 locationResult.addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
@@ -132,22 +132,27 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
                             )
                             mMap.addMarker(
                                 MarkerOptions().position(
-                                    LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude)
+                                    LatLng(
+                                        lastKnownLocation!!.latitude,
+                                        lastKnownLocation!!.longitude
+                                    )
                                 ).title("현재 위치")
 
 
                             )
-                            searchPlace(lastKnownLocation!!.latitude,lastKnownLocation!!.longitude , 1000, brand)
-
-
+                            searchPlace(
+                                lastKnownLocation!!.latitude,
+                                lastKnownLocation!!.longitude,
+                                1000,
+                                brand
+                            )
 
 
                         } else {
                             Log.d("TAG", "Current location is null. Using defaults.")
                             if (task.exception != null) {
                                 Log.e("TAG", "Exception: ${task.exception}")
-                            }
-                            else {
+                            } else {
                                 Log.e("TAG", "Exception: task.exception is null")
                             }
                             mMap.moveCamera(
@@ -165,6 +170,7 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
             Log.e("Exception: %s", e.message.toString())
         }
     }
+
     private fun getLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -177,20 +183,21 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
 
         }
     }
-    private fun allPermissionsGrandted() = REQUIRED_PERMISSIONS.all{
+
+    private fun allPermissionsGrandted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
             requireContext(), it
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun searchPlace(x: Double, y: Double, radius: Int, query: String){
+    private fun searchPlace(x: Double, y: Double, radius: Int, query: String) {
         val retrofit = KakaoClient.getClient("https://dapi.kakao.com")
         val api = retrofit?.create(KakaoInterface::class.java)
         val format = "json"
         val call = api?.getPlaceLatLng(format, x, y, radius, query, Constants.KAKAO_API_KEY)
 
         call?.enqueue(object : Callback<PlaceInfo> {
-            override fun onResponse(call: Call<PlaceInfo>, response: Response<PlaceInfo>){
+            override fun onResponse(call: Call<PlaceInfo>, response: Response<PlaceInfo>) {
                 Log.d("api", "call 함수 실행")
                 if (response.isSuccessful) {
                     val result = response.body()
@@ -198,10 +205,13 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
 
                     result?.documents?.forEach {
                         val latLng = LatLng(it.y.toDouble(), it.x.toDouble())
-                        mMap.addMarker(MarkerOptions().position(latLng).title(it.place_name).icon(
-                            com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker(
-                                com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_AZURE
-                            )))
+                        mMap.addMarker(
+                            MarkerOptions().position(latLng).title(it.place_name).icon(
+                                com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker(
+                                    com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_AZURE
+                                )
+                            )
+                        )
                     }
 
 
@@ -215,11 +225,11 @@ class MapsFragment(): Fragment(), OnMapReadyCallback{
             }
         })
     }
-    fun refreshFragment(fragment: Fragment, fragmentManager: FragmentManager){
+
+    fun refreshFragment(fragment: Fragment, fragmentManager: FragmentManager) {
         val ft = fragmentManager.beginTransaction()
         ft.detach(this).attach(this).commit()
     }
-
 
 
     companion object {

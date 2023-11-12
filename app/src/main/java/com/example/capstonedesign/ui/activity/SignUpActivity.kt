@@ -8,8 +8,6 @@ import android.util.Log
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.ViewTreeLifecycleOwner
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.api.RetrofitInstance
 import com.example.capstonedesign.data.response.User
@@ -66,7 +64,7 @@ class SignUpActivity : AppCompatActivity(), View.OnFocusChangeListener, View.OnK
         }
     }
 
-    private fun showSignUpSuccessDialog( ){
+    private fun showSignUpSuccessDialog() {
         val title = "회원가입"
         val message = "회원가입에 성공했습니다."
         val alertDialogBuilder = androidx.appcompat.app.AlertDialog.Builder(this)
@@ -80,6 +78,7 @@ class SignUpActivity : AppCompatActivity(), View.OnFocusChangeListener, View.OnK
             show()
         }
     }
+
     private fun showSignUPFailDialog() {
         val title = "회원가입"
         val message = "이미 가입된 이메일입니다."
@@ -180,7 +179,6 @@ class SignUpActivity : AppCompatActivity(), View.OnFocusChangeListener, View.OnK
         }
         return errorMessage == null
     }
-
 
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {

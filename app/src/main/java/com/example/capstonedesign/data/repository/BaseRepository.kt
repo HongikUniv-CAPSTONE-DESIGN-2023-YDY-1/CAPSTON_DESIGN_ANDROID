@@ -9,15 +9,20 @@ abstract class BaseRepository {
 
     suspend fun <T> safeApiCall(
         apiCall: suspend () -> T
-    ): SignResource<T>{
-        return withContext(Dispatchers.IO){
+    ): SignResource<T> {
+        return withContext(Dispatchers.IO) {
             try {
                 SignResource.Success(apiCall.invoke())
-            }catch (throwable: Throwable){
-                when(throwable){
-                    is HttpException ->{
-                        SignResource.Failure(false, throwable.code(), throwable.response()?.errorBody())
+            } catch (throwable: Throwable) {
+                when (throwable) {
+                    is HttpException -> {
+                        SignResource.Failure(
+                            false,
+                            throwable.code(),
+                            throwable.response()?.errorBody()
+                        )
                     }
+
                     else -> {
                         SignResource.Failure(true, null, null)
                     }

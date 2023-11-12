@@ -2,15 +2,12 @@ package com.example.capstonedesign.data.viewModel.item
 
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.capstonedesign.data.repository.Repository
 import com.example.capstonedesign.data.response.ItemResponse
-import com.example.capstonedesign.data.response.RecommendData
 import com.example.capstonedesign.data.response.RecommendListResponse
-
 import com.example.capstonedesign.data.response.ResponseData
 import com.example.capstonedesign.data.response.SearchItem
 import com.example.capstonedesign.utils.Resource
@@ -25,15 +22,9 @@ import java.io.File
 class ItemSearchViewModel(
     val itemRepository: Repository
 ) : ViewModel() {
-
-
     val Items: MutableLiveData<Resource<ItemResponse>> = MutableLiveData()
-
     val CamerItems: MutableLiveData<Resource<ItemResponse>> = MutableLiveData()
-
     val RecommendItems: MutableLiveData<Resource<RecommendListResponse>> = MutableLiveData()
-
-
 
     init {
         getAllItems()
@@ -65,6 +56,7 @@ class ItemSearchViewModel(
         val itemResponse = ItemResponse("success", ResponseData(list2))
         Items.postValue(Resource.Success(itemResponse))
     }
+
     fun searchBrand(brand: String) = viewModelScope.launch {
         Items.postValue(Resource.Loading())
 

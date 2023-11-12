@@ -1,10 +1,7 @@
-
-
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    
+
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
@@ -70,7 +67,6 @@ dependencies {
     implementation("com.google.android.libraries.places:places:3.2.0")
     implementation("com.google.maps.android:android-maps-utils:2.3.0")
     implementation("com.android.volley:volley:1.2.1")
-
     //camerax
     implementation("androidx.camera:camera-core:1.2.3")
     implementation("androidx.camera:camera-camera2:1.2.3")
@@ -88,12 +84,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     //viewmodel
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-
     //DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0-alpha06")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-
     //ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 

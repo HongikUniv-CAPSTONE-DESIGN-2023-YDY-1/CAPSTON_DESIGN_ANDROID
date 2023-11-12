@@ -12,11 +12,11 @@ import com.example.capstonedesign.utils.UserPreferences
 import com.example.capstonedesign.data.api.RemoteDataSource
 import com.example.capstonedesign.data.repository.BaseRepository
 
-abstract class BaseFragment<VM: ViewModel, B: ViewBinding, R: BaseRepository>: Fragment() {
+abstract class BaseFragment<VM : ViewModel, B : ViewBinding, R : BaseRepository> : Fragment() {
 
-    protected lateinit var  binding: B
+    protected lateinit var binding: B
     protected lateinit var viewModel: VM
-    protected lateinit var  userPreferences : UserPreferences
+    protected lateinit var userPreferences: UserPreferences
     protected val remoteDataSource = RemoteDataSource()
 
     override fun onCreateView(
@@ -25,14 +25,14 @@ abstract class BaseFragment<VM: ViewModel, B: ViewBinding, R: BaseRepository>: F
         savedInstanceState: Bundle?
     ): View? {
         userPreferences = UserPreferences(requireContext())
-        binding = getFragmentBinding(inflater,container)
+        binding = getFragmentBinding(inflater, container)
         val factory = ViewModelFactory(getFragmentRepository())
         viewModel = ViewModelProvider(this, factory).get(getViewModel())
         return binding.root
     }
 
-    abstract fun getViewModel() : Class<VM>
-    abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) : B
+    abstract fun getViewModel(): Class<VM>
+    abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B
 
     abstract fun getFragmentRepository(): R
 }

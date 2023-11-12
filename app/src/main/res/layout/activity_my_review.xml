@@ -44,30 +44,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_edge"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        android:layout_margin="20dp"
-        android:background="@drawable/bg_edge">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="내가 작성한 리뷰"
+            android:layout_margin="10dp"
             android:layout_marginTop="10dp"
-            android:textSize="20sp"
+            android:text="내가 작성한 리뷰"
             android:textColor="@color/black"
-            android:layout_margin="10dp"/>
+            android:textSize="20sp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey"/>
+            android:background="@color/grey" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_my_review"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

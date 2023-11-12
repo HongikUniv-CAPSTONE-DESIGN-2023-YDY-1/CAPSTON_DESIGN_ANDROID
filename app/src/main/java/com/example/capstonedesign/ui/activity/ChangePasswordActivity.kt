@@ -21,7 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
-class ChangePasswordActivity : AppCompatActivity(){
+class ChangePasswordActivity : AppCompatActivity() {
     lateinit var binding: ActivityChangePasswordBinding
     lateinit var userPreferences: UserPreferences
     lateinit var viewModel: AuthViewModel
@@ -39,7 +39,6 @@ class ChangePasswordActivity : AppCompatActivity(){
             changePassword()
 
 
-
         }
         binding.ibGoBack.setOnClickListener {
             finish()
@@ -47,18 +46,22 @@ class ChangePasswordActivity : AppCompatActivity(){
 
 
         val factory = AuthRepository(remoteDataSource.buildApi(IRetrofit::class.java))
-        viewModel = ViewModelProvider(this, ViewModelFactory(factory)).get(AuthViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, ViewModelFactory(factory)).get(AuthViewModel::class.java)
 
         viewModel.passwordChangeResponse.observe(this, Observer {
-            when(it){
-                is SignResource.Success ->{
+            when (it) {
+                is SignResource.Success -> {
                     lifecycleScope.launch {
-                        userPreferences.saveNewPassword(binding.etNewPassword.text.toString().trim())
+                        userPreferences.saveNewPassword(
+                            binding.etNewPassword.text.toString().trim()
+                        )
                     }
                     Toast.makeText(this, "비밀번호 변경 성공", Toast.LENGTH_SHORT).show()
                     finish()
                 }
-                is SignResource.Failure ->{
+
+                is SignResource.Failure -> {
                     Log.d("ChangePasswordActivity", "onCreate: ${it}")
                     Toast.makeText(this, "비밀번호 변경 실패", Toast.LENGTH_SHORT).show()
                 }
@@ -89,7 +92,7 @@ class ChangePasswordActivity : AppCompatActivity(){
         AlertDialog.Builder(this)
             .setTitle("비밀번호 변경 실패")
             .setMessage(message)
-            .setPositiveButton("확인"){ _,_ ->
+            .setPositiveButton("확인") { _, _ ->
 
             }
             .show()
@@ -105,12 +108,19 @@ class ChangePasswordActivity : AppCompatActivity(){
             .setTitle("비밀번호 변경")
             .setMessage(message)
             .setPositiveButton("확인") { _, _ ->
-               CoroutineScope(lifecycleScope.coroutineContext).launch {
+                CoroutineScope(lifecycleScope.coroutineContext).launch {
                     val email = userPreferences.userEmail.asLiveData().value ?: ""
                     val password = userPreferences.userPassword.asLiveData().value ?: ""
                     Log.d("ChangePasswordActivity", "resetForm: $email, $password")
-                    Log.d("ChangePasswordActivity", "resetForm: ${binding.etNewPassword.text.toString().trim()}")
-                    viewModel.changePassword(email, password, binding.etNewPassword.text.toString().trim())
+                    Log.d(
+                        "ChangePasswordActivity",
+                        "resetForm: ${binding.etNewPassword.text.toString().trim()}"
+                    )
+                    viewModel.changePassword(
+                        email,
+                        password,
+                        binding.etNewPassword.text.toString().trim()
+                    )
                 }
 
             }
@@ -120,8 +130,7 @@ class ChangePasswordActivity : AppCompatActivity(){
 
     private fun presentPassWorFocusListener() {
         binding.etPresentPassword.setOnFocusChangeListener { _, focused ->
-            if (!focused)
-            {
+            if (!focused) {
                 binding.presentPasswordTil.helperText = validPassword()
             }
         }
@@ -144,8 +153,7 @@ class ChangePasswordActivity : AppCompatActivity(){
 
     private fun newPasswordFocusListener() {
         binding.etNewPassword.setOnFocusChangeListener { _, focused ->
-            if (!focused)
-            {
+            if (!focused) {
                 binding.newPasswordTil.helperText = validNewPassword()
             }
         }
@@ -153,13 +161,13 @@ class ChangePasswordActivity : AppCompatActivity(){
 
     private fun validNewPassword(): String? {
         val newPassWord = binding.etNewPassword.text.toString()
-        if (newPassWord.length <8){
+        if (newPassWord.length < 8) {
             return "비밀번호는 8자리 이상이어야 합니다."
         }
-        if (newPassWord.length > 20){
+        if (newPassWord.length > 20) {
             return "비밀번호는 20자리 이하이어야 합니다."
         }
-        if (newPassWord.isEmpty()){
+        if (newPassWord.isEmpty()) {
             return "비밀번호를 입력해주세요."
         }
         if (!newPassWord.matches(Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#\$%^&*?!_~])[A-Za-z\\d@#\$%^&*?!_~]{8,20}\$"))) {

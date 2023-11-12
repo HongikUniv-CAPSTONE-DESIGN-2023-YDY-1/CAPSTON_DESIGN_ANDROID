@@ -1,18 +1,10 @@
 package com.example.capstonedesign.ui.activity
 
-import android.database.Cursor
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.bumptech.glide.Glide
@@ -21,12 +13,10 @@ import com.example.capstonedesign.data.adapter.DetailViewPagerAdapter
 import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModel
 import com.example.capstonedesign.data.viewModel.item.ItemSearchViewModelProviderFactory
 import com.example.capstonedesign.data.repository.Repository
-import com.example.capstonedesign.data.response.ItemResponse
 import com.example.capstonedesign.data.response.SearchItem
 import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
 import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModelProviderFactory
 import com.example.capstonedesign.databinding.ActivityCameraSearchResultBinding
-import com.example.capstonedesign.utils.Resource
 import com.example.capstonedesign.utils.UserPreferences
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -49,11 +39,15 @@ class CameraSearchResultActivity : AppCompatActivity() {
 
         val itemRepository = Repository()
         val ItemSearchViewModelProviderFactory = ItemSearchViewModelProviderFactory(itemRepository)
-        viewModel = ViewModelProvider(this, ItemSearchViewModelProviderFactory).get(ItemSearchViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            ItemSearchViewModelProviderFactory
+        ).get(ItemSearchViewModel::class.java)
 
         val reviewRepository = Repository()
-        val reviewViewModelProviderFactory =ReviewViewModelProviderFactory(reviewRepository)
-        reviewViewModel = ViewModelProvider(this, reviewViewModelProviderFactory).get(ReviewViewModel::class.java)
+        val reviewViewModelProviderFactory = ReviewViewModelProviderFactory(reviewRepository)
+        reviewViewModel =
+            ViewModelProvider(this, reviewViewModelProviderFactory).get(ReviewViewModel::class.java)
 
         userPreferences = UserPreferences(this)
 
@@ -63,7 +57,7 @@ class CameraSearchResultActivity : AppCompatActivity() {
             intent.getParcelableExtra<SearchItem>("itemInfo")
         }
 
-        userPreferences.accessToken.asLiveData().observe(this){
+        userPreferences.accessToken.asLiveData().observe(this) {
             val accessToken = it ?: ""
             if (accessToken.isEmpty()) {
                 return@observe
@@ -90,7 +84,6 @@ class CameraSearchResultActivity : AppCompatActivity() {
         }
 
     }
-
 
 
     private fun addInfo(result: SearchItem) {

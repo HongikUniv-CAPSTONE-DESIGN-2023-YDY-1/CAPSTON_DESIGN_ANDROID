@@ -6,17 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.capstonedesign.ui.fragment.MapsFragment">
+
     <TextView
         android:id="@+id/permission_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="위치권한이 없습니다."
-        android:textSize="30sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textAlignment="center"
         android:gravity="center"
-        android:visibility="gone"/>
+        android:text="위치권한이 없습니다."
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

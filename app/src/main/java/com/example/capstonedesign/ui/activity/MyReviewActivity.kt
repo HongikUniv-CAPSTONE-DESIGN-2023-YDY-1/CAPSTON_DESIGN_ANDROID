@@ -11,7 +11,6 @@ import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstonedesign.data.adapter.ReviewAdapter
 import com.example.capstonedesign.data.repository.Repository
-
 import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
 import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModelProviderFactory
 import com.example.capstonedesign.databinding.ActivityMyReviewBinding

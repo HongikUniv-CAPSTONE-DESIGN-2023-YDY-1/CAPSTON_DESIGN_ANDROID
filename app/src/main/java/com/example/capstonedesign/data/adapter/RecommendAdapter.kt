@@ -1,7 +1,5 @@
 package com.example.capstonedesign.data.adapter
 
-
-import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -10,17 +8,16 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.response.RecommendData
 
 
-class RecommendAdapter(): RecyclerView.Adapter<RecommendAdapter.RecommendViewHolder>() {
-    inner class RecommendViewHolder(recommendView: View): RecyclerView.ViewHolder(recommendView)
+class RecommendAdapter() : RecyclerView.Adapter<RecommendAdapter.RecommendViewHolder>() {
+    inner class RecommendViewHolder(recommendView: View) : RecyclerView.ViewHolder(recommendView)
 
-    private val differCallback = object : DiffUtil.ItemCallback<RecommendData>(){
+    private val differCallback = object : DiffUtil.ItemCallback<RecommendData>() {
         override fun areItemsTheSame(oldItem: RecommendData, newItem: RecommendData): Boolean {
             return oldItem.id == newItem.id
         }
@@ -32,7 +29,10 @@ class RecommendAdapter(): RecyclerView.Adapter<RecommendAdapter.RecommendViewHol
 
     val differ = AsyncListDiffer(this, differCallback)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendAdapter.RecommendViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): RecommendAdapter.RecommendViewHolder {
         return RecommendViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.recommend_layout,
@@ -45,14 +45,14 @@ class RecommendAdapter(): RecyclerView.Adapter<RecommendAdapter.RecommendViewHol
     override fun onBindViewHolder(holder: RecommendAdapter.RecommendViewHolder, position: Int) {
         val recommend = differ.currentList[position]
         val brand = recommend.brand
-        val brandColor = when(brand) {
+        val brandColor = when (brand) {
             "CU" -> ContextCompat.getColor(holder.itemView.context, R.color.cu)
             "GS25" -> ContextCompat.getColor(holder.itemView.context, R.color.gs25)
             "SEVENELEVEN" -> ContextCompat.getColor(holder.itemView.context, R.color.seven)
             "EMART24" -> ContextCompat.getColor(holder.itemView.context, R.color.emart24)
             else -> Color.BLACK
         }
-        val borderColor = when(brand) {
+        val borderColor = when (brand) {
             "CU" -> R.drawable.cu_border_color
             "GS25" -> R.drawable.gs25_border_color
             "SEVENELEVEN" -> R.drawable.seven_border_color
@@ -62,7 +62,7 @@ class RecommendAdapter(): RecyclerView.Adapter<RecommendAdapter.RecommendViewHol
         val name = recommend.name
         val pricePerUnit = recommend.pricePerUnit
         val pricePerGroup = recommend.pricePerGroup
-        val promotion = when(recommend.promotion) {
+        val promotion = when (recommend.promotion) {
             "ONE_PLUS_ONE" -> "1 + 1"
             "TWO_PLUS_ONE" -> "2 + 1"
             else -> recommend.promotion

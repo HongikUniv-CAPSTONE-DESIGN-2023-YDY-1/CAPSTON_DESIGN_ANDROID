@@ -9,7 +9,6 @@
     tools:context="com.example.capstonedesign.ui.fragment.ReviewFragment">
 
 
-
     <TextView
         android:id="@+id/tv_not_login"
         android:layout_width="match_parent"
@@ -43,60 +42,58 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="리뷰를 작성해주세요."
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
+        android:text="리뷰를 작성해주세요."
         android:textColor="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_edge"
-        android:orientation="vertical"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:background="@drawable/bg_edge"
+        android:orientation="vertical">
 
         <RatingBar
             android:id="@+id/ratingBar"
             style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
             android:isIndicator="false"
             android:numStars="5"
             android:rating="0"
-            android:stepSize="1"
-            android:layout_gravity="end"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"/>
+            android:stepSize="1" />
+
         <EditText
             android:id="@+id/et_content"
-            android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:background="#eeeeee"
             android:hint="내용을 입력하세요."
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            />
+            android:padding="16dp" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_review_submit"
             android:layout_width="60dp"
             android:layout_height="30dp"
-            android:text="작성"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:background="@color/black"
             android:layout_gravity="end"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"/>
-
-
-
+            android:background="@color/black"
+            android:text="작성"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
 
     </LinearLayout>
@@ -104,15 +101,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:background="@color/grey" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_review"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1" />
 
 </LinearLayout>
 

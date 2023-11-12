@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.capstonedesign.data.repository.Repository
-
 import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModel
 import com.example.capstonedesign.data.viewModel.reviews.ReviewViewModelProviderFactory
 import com.example.capstonedesign.databinding.ActivityUpdateReviewBinding
@@ -41,7 +40,8 @@ class UpdateReviewActivity : AppCompatActivity() {
         userPreferences = UserPreferences(this)
         val reviewRepository = Repository()
         val reviewViewModelProviderFactory = ReviewViewModelProviderFactory(reviewRepository)
-        viewModel = ViewModelProvider(this, reviewViewModelProviderFactory).get(ReviewViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, reviewViewModelProviderFactory).get(ReviewViewModel::class.java)
 
         binding.etUpdateContent.setText(reviewContent)
         binding.ratingBar.rating = reviewRating
@@ -53,9 +53,15 @@ class UpdateReviewActivity : AppCompatActivity() {
                 val rating = binding.ratingBar.rating
                 val reviewContent = binding.etUpdateContent.text.toString()
 
-                viewModel.updateReview(reviewId, promotionId, rating.toInt(), reviewContent, accessTokenHeader)
+                viewModel.updateReview(
+                    reviewId,
+                    promotionId,
+                    rating.toInt(),
+                    reviewContent,
+                    accessTokenHeader
+                )
                 viewModel.updateReview.observe(this, Observer { response ->
-                    when(response) {
+                    when (response) {
                         is Resource.Success -> {
                             response.data?.let { updateReviewResponse ->
                                 Log.d("UpdateReviewActivity", "onCreate: ${updateReviewResponse}")
@@ -63,6 +69,7 @@ class UpdateReviewActivity : AppCompatActivity() {
                                 finish()
                             }
                         }
+
                         is Resource.Error -> {
                             response.message?.let { message ->
                                 Log.d("UpdateReviewActivity", "onCreate: ${message}")
@@ -73,8 +80,6 @@ class UpdateReviewActivity : AppCompatActivity() {
                 })
             }
         }
-
-
 
 
     }

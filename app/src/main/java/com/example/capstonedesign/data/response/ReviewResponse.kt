@@ -9,12 +9,14 @@ data class ReviewResponse(
     @SerializedName("message")
     val message: String
 )
+
 data class UpdateReviewResponse(
     @SerializedName("data")
     val data: Content,
     @SerializedName("message")
     val message: String
 )
+
 data class SortX(
     @SerializedName("empty")
     val empty: Boolean,
@@ -23,6 +25,7 @@ data class SortX(
     @SerializedName("unsorted")
     val unsorted: Boolean
 )
+
 data class ReviewData(
     @SerializedName("content")
     val content: List<Content>,
@@ -47,6 +50,7 @@ data class ReviewData(
     @SerializedName("totalPages")
     val totalPages: Int
 )
+
 data class Pageable(
     @SerializedName("offset")
     val offset: Int,
@@ -61,6 +65,7 @@ data class Pageable(
     @SerializedName("unpaged")
     val unpaged: Boolean
 )
+
 data class Content(
     @SerializedName("commentId")
     val commentId: Int,

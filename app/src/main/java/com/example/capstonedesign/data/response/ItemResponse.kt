@@ -12,6 +12,7 @@ data class ItemResponse(
     @SerializedName("data")
     var response: ResponseData
 )
+
 @Parcelize
 data class SearchItem(
     @SerializedName("id")
@@ -28,7 +29,8 @@ data class SearchItem(
     val pricePerUnit: Int,
     @SerializedName("promotion")
     val promotion: String
- ): Parcelable
+) : Parcelable
+
 data class ResponseData(
     @SerializedName("searchItems")
     val searchItems: List<SearchItem>

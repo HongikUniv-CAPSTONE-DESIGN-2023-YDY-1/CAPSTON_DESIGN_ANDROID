@@ -21,6 +21,7 @@ class RecommendItemActivity : AppCompatActivity() {
         "지도",
         "리뷰"
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecommendItemBinding.inflate(layoutInflater)
@@ -37,7 +38,12 @@ class RecommendItemActivity : AppCompatActivity() {
         userPreferences = UserPreferences(this)
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
-        val adapter = DetailViewPagerAdapter(supportFragmentManager, lifecycle,itemInfo.brand, itemInfo.id.toString())
+        val adapter = DetailViewPagerAdapter(
+            supportFragmentManager,
+            lifecycle,
+            itemInfo.brand,
+            itemInfo.id.toString()
+        )
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tableLayout[position]
@@ -48,24 +54,22 @@ class RecommendItemActivity : AppCompatActivity() {
         }
 
 
-
-
-
     }
+
     private fun refactoringInfo(item: RecommendData) {
-        val promotion = when(item.promotion){
+        val promotion = when (item.promotion) {
             "ONE_PLUS_ONE" -> "1 + 1"
             "TWO_PLUS_ONE" -> "2 + 1"
             else -> item.promotion
         }
-        val brandColor = when(item.brand){
+        val brandColor = when (item.brand) {
             "CU" -> ContextCompat.getColor(this, R.color.cu)
             "GS25" -> ContextCompat.getColor(this, R.color.gs25)
             "SEVENELEVEN" -> ContextCompat.getColor(this, R.color.seven)
             "EMART24" -> ContextCompat.getColor(this, R.color.emart24)
             else -> ContextCompat.getColor(this, R.color.black)
         }
-        val borderColor = when(item.brand) {
+        val borderColor = when (item.brand) {
             "CU" -> R.drawable.cu_border_color
             "GS25" -> R.drawable.gs25_border_color
             "SEVENELEVEN" -> R.drawable.seven_border_color
@@ -80,7 +84,7 @@ class RecommendItemActivity : AppCompatActivity() {
         binding.tvConvName.setTextColor(brandColor)
         binding.tvConvName.setBackgroundResource(borderColor)
         binding.tvItemName.text = item.name
-        binding.tvItemPrice.text = price.toString()+"원"
+        binding.tvItemPrice.text = price.toString() + "원"
         Glide.with(this).load(fullImgUrl).into(binding.ivItemImage)
     }
 

@@ -6,7 +6,7 @@ import com.example.capstonedesign.data.repository.Repository
 
 class ItemSearchViewModelProviderFactory(
     private val itemRepository: Repository
-): ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return ItemSearchViewModel(itemRepository) as T
     }

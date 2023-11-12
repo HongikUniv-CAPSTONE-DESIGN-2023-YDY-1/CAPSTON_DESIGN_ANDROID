@@ -13,18 +13,18 @@ import com.bumptech.glide.Glide
 import com.example.capstonedesign.R
 import com.example.capstonedesign.data.response.SearchItem
 
-class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>() {
+class ItemSearchAdapter : RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>() {
 
-    inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 
-    private val differCallback = object : DiffUtil.ItemCallback<SearchItem>(){
+    private val differCallback = object : DiffUtil.ItemCallback<SearchItem>() {
         override fun areItemsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
             return oldItem.imgUrl == newItem.imgUrl
         }
 
         override fun areContentsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
-            return  oldItem == newItem
+            return oldItem == newItem
         }
 
     }
@@ -47,24 +47,23 @@ class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>(
     }
 
 
-
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = differ.currentList[position]
         val promotion = item.promotion
-        val formattedPromtion = when(promotion) {
+        val formattedPromtion = when (promotion) {
             "ONE_PLUS_ONE" -> "1 + 1"
             "TWO_PLUS_ONE" -> "2 + 1"
             else -> promotion
         }
         val brand = item.brand
-        val brandColor = when(brand) {
+        val brandColor = when (brand) {
             "CU" -> ContextCompat.getColor(holder.itemView.context, R.color.cu)
             "GS25" -> ContextCompat.getColor(holder.itemView.context, R.color.gs25)
             "SEVENELEVEN" -> ContextCompat.getColor(holder.itemView.context, R.color.seven)
             "EMART24" -> ContextCompat.getColor(holder.itemView.context, R.color.emart24)
             else -> Color.BLACK
         }
-        val borderColor = when(brand) {
+        val borderColor = when (brand) {
             "CU" -> R.drawable.cu_border_color
             "GS25" -> R.drawable.gs25_border_color
             "SEVENELEVEN" -> R.drawable.seven_border_color
@@ -81,7 +80,7 @@ class ItemSearchAdapter: RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>(
             findViewById<TextView>(R.id.tv_conv_name).setTextColor(brandColor)
             findViewById<TextView>(R.id.tv_conv_name).setBackgroundResource(borderColor)
             findViewById<TextView>(R.id.tv_item_name).text = item.name
-            findViewById<TextView>(R.id.tv_price).text = item.pricePerUnit.toString()+"원"
+            findViewById<TextView>(R.id.tv_price).text = item.pricePerUnit.toString() + "원"
             Glide.with(this).load(fullImgUrl).into(findViewById(R.id.iv_item_image))
             setOnClickListener {
                 onItemClickListener?.let { it(item) }

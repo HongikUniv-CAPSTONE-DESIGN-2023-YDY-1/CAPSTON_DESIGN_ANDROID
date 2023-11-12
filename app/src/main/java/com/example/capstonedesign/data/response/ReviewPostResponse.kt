@@ -11,17 +11,20 @@ data class ReviewPostResponse(
     @SerializedName("errorMessage")
     val errorMessage: String?
 )
+
 data class ReviewPostBody(
     val promotionId: Int,
     val star: Int,
     val content: String,
 )
+
 data class UpdateReviewBody(
     val commentId: Int,
     val promotionId: Int,
     val star: Int,
     val content: String,
 )
+
 data class ReviewPostData(
     @SerializedName("commentId")
     val commentId: Int,

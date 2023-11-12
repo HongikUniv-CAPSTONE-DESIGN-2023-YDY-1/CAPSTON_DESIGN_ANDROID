@@ -19,10 +19,10 @@ import kotlinx.coroutines.launch
 
 class LogInActivity() : AppCompatActivity() {
 
-   private lateinit var binding: ActivityLogInBinding
-   lateinit var userPreferences: UserPreferences
-   lateinit var viewModel: AuthViewModel
-   val remoteDataSource = RemoteDataSource()
+    private lateinit var binding: ActivityLogInBinding
+    lateinit var userPreferences: UserPreferences
+    lateinit var viewModel: AuthViewModel
+    val remoteDataSource = RemoteDataSource()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +32,22 @@ class LogInActivity() : AppCompatActivity() {
 
         userPreferences = UserPreferences(this)
         val factory = AuthRepository(remoteDataSource.buildApi(IRetrofit::class.java))
-        viewModel = ViewModelProvider(this, ViewModelFactory(factory)).get(AuthViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, ViewModelFactory(factory)).get(AuthViewModel::class.java)
 
 
         viewModel.loginResponse.observe(this, Observer {
-            when(it){
-                is SignResource.Success ->{
+            when (it) {
+                is SignResource.Success -> {
                     lifecycleScope.launch {
-                        userPreferences.saveToken(it.value.data.accessToken, it.value.data.refreshToken)
-                        userPreferences.saveEmailAndPassword(binding.etEmail.text.toString().trim(), binding.etPassword.text.toString().trim())
+                        userPreferences.saveToken(
+                            it.value.data.accessToken,
+                            it.value.data.refreshToken
+                        )
+                        userPreferences.saveEmailAndPassword(
+                            binding.etEmail.text.toString().trim(),
+                            binding.etPassword.text.toString().trim()
+                        )
                         userPreferences.saveLoginStatus(true)
                     }
                     Toast.makeText(this, "로그인성공", Toast.LENGTH_SHORT).show()
@@ -48,7 +55,8 @@ class LogInActivity() : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-                is SignResource.Failure ->{
+
+                is SignResource.Failure -> {
                     Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
                 }
             }
