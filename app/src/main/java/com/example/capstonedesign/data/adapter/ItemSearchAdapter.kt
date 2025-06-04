@@ -70,9 +70,7 @@ class ItemSearchAdapter : RecyclerView.Adapter<ItemSearchAdapter.ItemViewHolder>
             "EMART24" -> R.drawable.emart24_border_color
             else -> R.drawable.black_border
         }
-        val imgData = item.imgUrl
-        val fullImgUrl = "http://nas.robinjoon.xyz:8080/image/$imgData"
-        val itemId = item.id
+        val fullImgUrl = "http://192.168.37.200:8081/image/${item.imgUrl}"
 
         holder.itemView.apply {
             findViewById<TextView>(R.id.tv_item_promotion).text = formattedPromtion

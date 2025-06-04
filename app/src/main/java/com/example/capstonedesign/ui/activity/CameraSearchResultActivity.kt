@@ -110,8 +110,7 @@ class CameraSearchResultActivity : AppCompatActivity() {
             "EMART24" -> R.drawable.emart24_border_color
             else -> R.drawable.black_border
         }
-        val imgData = result.imgUrl
-        val fullImgUrl = "http://nas.robinjoon.xyz:8080/image/$imgData"
+        val fullImgUrl = "http://192.168.37.200:8081/image/${result.imgUrl}"
         val price = result.pricePerUnit
 
         binding.apply {

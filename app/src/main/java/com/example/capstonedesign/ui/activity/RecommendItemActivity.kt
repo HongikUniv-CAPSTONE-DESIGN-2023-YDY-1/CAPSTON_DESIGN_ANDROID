@@ -76,7 +76,7 @@ class RecommendItemActivity : AppCompatActivity() {
             "EMART24" -> R.drawable.emart24_border_color
             else -> R.drawable.black_border
         }
-        val fullImgUrl = "http://nas.robinjoon.xyz:8080/image/${item.imgUrl}"
+        val fullImgUrl = "http://192.168.37.200:8081/image/${item.imgUrl}"
         val price = item.pricePerUnit
 
         binding.tvItemPromotion.text = promotion

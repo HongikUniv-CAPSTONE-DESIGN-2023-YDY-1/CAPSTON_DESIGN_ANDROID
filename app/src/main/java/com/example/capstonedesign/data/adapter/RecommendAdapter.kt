@@ -67,9 +67,7 @@ class RecommendAdapter() : RecyclerView.Adapter<RecommendAdapter.RecommendViewHo
             "TWO_PLUS_ONE" -> "2 + 1"
             else -> recommend.promotion
         }
-        val imgUrl = recommend.imgUrl
-        val fullImgUrl = "http://nas.robinjoon.xyz:8080/image/$imgUrl"
-        val itemId = recommend.id
+        val fullImgUrl = "http://192.168.37.200:8081/image/${recommend.imgUrl}"
 
         holder.itemView.apply {
             findViewById<TextView>(R.id.tv_promotion).text = promotion
