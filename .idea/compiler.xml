@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="CapstoneDesign.core.data" target="17" />
+      <module name="CapstoneDesign.core.network" target="17" />
+      <module name="CapstoneDesign.core.presentation.designsystem" target="17" />
+      <module name="CapstoneDesign.core.presentation.ui" target="17" />
+      <module name="CapstoneDesign.feature.auth.data" target="17" />
+      <module name="CapstoneDesign.feature.auth.presentation" target="17" />
+      <module name="CapstoneDesign.feature.camera.data" target="17" />
+      <module name="CapstoneDesign.feature.camera.presentation" target="17" />
+      <module name="CapstoneDesign.feature.detail.data" target="17" />
+      <module name="CapstoneDesign.feature.detail.presentation" target="17" />
+      <module name="CapstoneDesign.feature.home.data" target="17" />
+      <module name="CapstoneDesign.feature.home.presentation" target="17" />
+      <module name="CapstoneDesign.feature.mypage.data" target="17" />
+      <module name="CapstoneDesign.feature.mypage.presentation" target="17" />
+      <module name="CapstoneDesign.feature.search.data" target="17" />
+      <module name="CapstoneDesign.feature.search.presentation" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
